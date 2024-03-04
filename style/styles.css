@@ -1,7 +1,7 @@
     body{
-
      background-image: url('../style/BackgroundArt.png');
      height: 100vh;
+	 
     }
 /* Remove the navbar's default margin-bottom and rounded borders */ 
     .navbar {
@@ -24,11 +24,13 @@
     footer {
       background-color: #555;
       color: white;
-      padding: 20px;
+      padding: 5px;
       bottom: 0;
       position: absolute;
       width: 100%;
     }
+	
+
     
     /* On small screens, set height to 'auto' for sidenav and grid */
     @media screen and (max-width: 767px) {
