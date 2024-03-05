@@ -29,6 +29,9 @@
       width: 100%;
     }
 	
+	input{
+		text-align: center;
+	}
 
     
     /* On small screens, set height to 'auto' for sidenav and grid */
