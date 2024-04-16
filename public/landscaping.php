@@ -20,9 +20,6 @@
 
 
 
-
-
-
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -62,6 +59,7 @@
       <h1>Landscaping</h1>
       <b>iCare is a groundbreaking home service that empowers homeowners to effortlessly manage their essential home services in a whole new way. With iCare, homeowners can create personalized home profiles encompassing every aspect of their living space, from mortgages and insurance to lawn care, internet, and more.</b>
       <hr>
+      <embed src="https://www.measuremylawn.com" style="width:600px; height: 550px;">
       <h3>Other Account Stuff</h3>
       <p>Now you shall suffer...</p>
     </div>
