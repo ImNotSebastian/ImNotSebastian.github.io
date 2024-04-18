@@ -62,8 +62,24 @@
       <h1>Interior</h1>
       <b>iCare is a groundbreaking home service that empowers homeowners to effortlessly manage their essential home services in a whole new way. With iCare, homeowners can create personalized home profiles encompassing every aspect of their living space, from mortgages and insurance to lawn care, internet, and more.</b>
       <hr>
-      <h3>Other Account Stuff</h3>
-      <p>Now you shall suffer...</p>
+
+
+<form action="submit_interior.php" method="POST" enctype="multipart/form-data">
+  <label for="floor_plan">Upload Floor Plan:</label><br>
+  <input type="file" id="floor_plan" name="floor_plan" accept=".pdf,.jpg,.jpeg,.png" required><br><br>
+
+  <label for="num_bedrooms">Number of Bedrooms:</label><br>
+  <input type="number" id="num_bedrooms" name="num_bedrooms" min="0" required><br><br>
+
+         <label for="num_bathrooms">Number of Bathrooms:</label><br>
+         <input type="number" id="num_bathrooms" name="num_bathrooms" min="0" required><br><br>
+
+         <label for="floor_space">Floor Space (in square meters):</label><br>
+         <input type="number" id="floor_space" name="floor_space" min="0" step="any" required><br><br>
+
+         <input type="submit" value="Submit">
+      </form>
+
     </div>
     <div class="col-sm-2 sidenav">
 		<a href ="dashboard.php">
@@ -92,16 +108,16 @@
   </div>
 </div>
 
-</body>
 
-<body class="d-flex flex-column vh-100">
- <div class="container overflow-auto">
+
+<div class="container-fluid">
+ <div class="row">
+	<footer class = "col-sm-12 text-center">
+		<p>&copy; Copyright 2024, Hassan's Corporation</p>
+	</footer>
   </div>
-  <footer class="bg-black text-white mt-auto">
-      <div class="container text-center">
-          <p><p>&copy; Copyright 2024, Hassan's Corporation</p></p>
-      </div>
-  </footer>
+</div>
+
 </body>
 </html>
 
