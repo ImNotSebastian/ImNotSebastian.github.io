@@ -31,18 +31,18 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand" href="index.html">
+      <a class="navbar-brand" href="index.php">
          <img src="../style/iCareLogo.png" alt = "Logo"style="width:90px;height:30px;">
       </a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="signup.html">Sign Up</a></li>
+        <li><a href="index.php">Home</a></li>
+        <li><a href="about.php">About</a></li>
+        <li><a href="signup.php">Sign Up</a></li>
       </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      <ul class="nav navbar-nav navbar-right"
+        <li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
       </ul>
     </div>
   </div>
@@ -53,9 +53,9 @@
   <div class="row content">
     <div class="col-sm-2 sidenav">
        <h2>Services</h2>
-	 	  <p><a href="contact.html"  class="text-decoration-none">Support</a></p>
-      <p><a href="TOS.html"  class="text-decoration-none">Terms of Service</a></p>
-      <p><a href="PP.html"  class="text-decoration-none">Privacy Policy</a></p>
+	 	  <p><a href="contact.php"  class="text-decoration-none">Support</a></p>
+      <p><a href="TOS.php"  class="text-decoration-none">Terms of Service</a></p>
+      <p><a href="PP.php"  class="text-decoration-none">Privacy Policy</a></p>
     </div>
 
     <div class="col-sm-8 text-center">
@@ -67,22 +67,22 @@
       <p>Now you shall suffer...</p>
     </div>
     <div class="col-sm-2 sidenav">
-		<a href ="dashboard.html">
+		<a href ="bizdash.php">
 			<h2>Dashboard</h2>
 		</a>
-		<a href ="landscaping.html">
+		<a href ="businesses.php">
 			<button type="button" class="btn btn-success btn-block">Businesses</button>
 		</a>
       <hr>
-		<a href ="internet.html">
+		<a href ="analytics.php">
 			<button type="button" class="btn btn-success btn-block">Analytics</button>
 		</a>
       <hr>
-	  <a href ="interior.html">
+	  <a href ="ads.php">
         <button type="button" class="btn btn-success btn-block">Manage Ads</button>
 	  </a>
       <hr>
-	   <a href ="settings.html">
+	   <a href ="bizsettings.php">
         <button type="button" class="btn btn-success btn-block">Settings</button>
 		</a>
     </div>

@@ -67,7 +67,7 @@
       <p>Now you shall suffer...</p>
     </div>
     <div class="col-sm-2 sidenav">
-		<a href ="dashboard.php">
+		<a href ="bizdash.php">
 			<h2>Dashboard</h2>
 		</a>
 		<a href ="businesses.php">
@@ -82,7 +82,7 @@
         <button type="button" class="btn btn-success btn-block">Manage Ads</button>
 	  </a>
       <hr>
-	   <a href ="bizdash.php">
+	   <a href ="bizsettings.php">
         <button type="button" class="btn btn-success btn-block">Settings</button>
 		</a>
     </div>
