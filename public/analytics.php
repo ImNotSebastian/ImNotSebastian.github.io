@@ -87,19 +87,19 @@
             <tr>
                <th>Service Requests</th>
                <th>Description</th>
-               <th>Offer</th>
+               <th>Date Requested</th>
             </tr>
          </thead>
          <tbody>
             <tr>
                <td>Sample Request</td>
                <td>Sample Description </td>
-               <td>$2000</td>
+               <td>04/12/224</td>
             </tr>
             <tr>
                <td>Sample Request 2</td>
                <td>Sample Description 2</td>
-               <td>$500</td>
+               <td>01/01/1970</td>
             </tr>
          <!-- Add more rows for each ticket -->
          </tbody>
