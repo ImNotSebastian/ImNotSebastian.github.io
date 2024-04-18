@@ -57,14 +57,128 @@
       <p><a href="TOS.php"  class="text-decoration-none">Terms of Service</a></p>
       <p><a href="PP.php"  class="text-decoration-none">Privacy Policy</a></p>
     </div>
-
     <div class="col-sm-8 text-center">
 	   <img src="../style/iCareLogo.png" class="img-fluid" alt = "Logo">
-      <h1>Account Overview</h1>
-      <b>iCare is a groundbreaking home service that empowers homeowners to effortlessly manage their essential home services in a whole new way. With iCare, homeowners can create personalized home profiles encompassing every aspect of their living space, from mortgages and insurance to lawn care, internet, and more.</b>
-      <hr>
-      <h3>Other Account Stuff</h3>
-      <p>Now you shall suffer...</p>
+	  
+	  <ul class="list-group">
+		<li class="list-group-item">
+			<h3>Settings</h3>
+		</li>
+		<li class="list-group-item">
+			<button data-toggle="collapse" data-target="#noti">Notification Settings</button>
+			<div id="noti" class="collapse">
+         	<form action="/action_page.php">
+	      		<div class="form-group">
+			      	<label for="email">Email address:</label>
+				         <input type="email" class="form-control" id="email">
+			      </div>
+			      <div class="form-group">
+				      <label for="pwd">Password:</label>
+				         <input type="password" class="form-control" id="pwd">
+			      </div>
+			      <div class="checkbox">
+				      <label><input type="checkbox"> Remember me</label>
+			      </div>
+			      <button type="submit" class="btn btn-default">Submit</button>
+		      </form>
+         </div>
+		</li>
+    <li class="list-group-item">
+		<button data-toggle="collapse" data-target="#ads">Manage Advertisments</button>
+			<div id="ads" class="collapse">
+         	<form action="/action_page.php">
+	      		<div class="form-group">
+			      	<label for="email">Email address:</label>
+				         <input type="email" class="form-control" id="email">
+			      </div>
+			      <div class="form-group">
+				      <label for="pwd">Password:</label>
+				         <input type="password" class="form-control" id="pwd">
+			      </div>
+			      <div class="checkbox">
+				      <label><input type="checkbox"> Remember me</label>
+			      </div>
+			      <button type="submit" class="btn btn-default">Submit</button>
+		      </form>
+			</div>
+		</li>
+		<li class="list-group-item">
+		<button data-toggle="collapse" data-target="#add">Add Business</button>
+			<div id="add" class="collapse">
+         	<form action="/action_page.php">
+	      		<div class="form-group">
+			      	<label for="email">Email address:</label>
+				         <input type="email" class="form-control" id="email">
+			      </div>
+			      <div class="form-group">
+				      <label for="pwd">Password:</label>
+				         <input type="password" class="form-control" id="pwd">
+			      </div>
+			      <div class="checkbox">
+				      <label><input type="checkbox"> Remember me</label>
+			      </div>
+			      <button type="submit" class="btn btn-default">Submit</button>
+		      </form>
+			</div>
+		</li>
+		<li class="list-group-item">
+			<button data-toggle="collapse" data-target="#remo">Remove Business</button>
+			<div id="remo" class="collapse">
+         	<form action="/action_page.php">
+	      		<div class="form-group">
+			      	<label for="email">Email address:</label>
+				         <input type="email" class="form-control" id="email">
+			      </div>
+			      <div class="form-group">
+				      <label for="pwd">Password:</label>
+				         <input type="password" class="form-control" id="pwd">
+			      </div>
+			      <div class="checkbox">
+				      <label><input type="checkbox"> Remember me</label>
+			      </div>
+			      <button type="submit" class="btn btn-default">Submit</button>
+		      </form>
+			</div>
+		</li>
+		<li class="list-group-item">
+			<button data-toggle="collapse" data-target="#change">Change Password</button>
+			<div id="change" class="collapse">
+         	<form action="/action_page.php">
+	      		<div class="form-group">
+			      	<label for="email">Email address:</label>
+				         <input type="email" class="form-control" id="email">
+			      </div>
+			      <div class="form-group">
+				      <label for="pwd">Password:</label>
+				         <input type="password" class="form-control" id="pwd">
+			      </div>
+			      <div class="checkbox">
+				      <label><input type="checkbox"> Remember me</label>
+			      </div>
+			      <button type="submit" class="btn btn-default">Submit</button>
+		      </form>
+			</div>
+		</li>
+		<li class="list-group-item">
+			<button data-toggle="collapse" data-target="#delete">Delete Account</button>
+			<div id="delete" class="collapse">
+         	<form action="/action_page.php">
+	      		<div class="form-group">
+			      	<label for="email">Email address:</label>
+				         <input type="email" class="form-control" id="email">
+			      </div>
+			      <div class="form-group">
+				      <label for="pwd">Password:</label>
+				         <input type="password" class="form-control" id="pwd">
+			      </div>
+			      <div class="checkbox">
+				      <label><input type="checkbox"> Remember me</label>
+			      </div>
+			      <button type="submit" class="btn btn-default">Submit</button>
+		      </form>
+			</div>
+		</li>
+	  </ul> 
     </div>
     <div class="col-sm-2 sidenav">
 		<a href ="bizdash.php">
