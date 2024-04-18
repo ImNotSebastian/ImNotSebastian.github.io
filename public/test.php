@@ -1,16 +1,12 @@
+<!DOCTYPE html>
 <html>
+<body>
 
-
-<?php 
-
-$printVariable = "SELECT * FROM TableName;"
-
-echo printVariable;
-
-echo 
-
+<?php
+include "dbtestconnect.php";
+$names = "SELECT * FROM Names";
+echo  $names . "<br>";
 ?>
 
+</body>
 </html>
-
-
