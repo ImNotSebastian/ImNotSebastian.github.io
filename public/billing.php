@@ -14,6 +14,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 
+
 </head>
 <body>
 
@@ -66,35 +67,35 @@
 
 <h2>Add Credit Card Information and Billing Address</h2>
 
+
+
 <form action="submit_payment.php" method="POST">
   <fieldset>
     <legend>Credit Card Information</legend>
-    <label for="card_number">Card Number:</label><br>
-    <input type="text" id="card_number" name="card_number" pattern="[0-9]{16}" required><br><br>
-
-    <label for="expiration_date">Expiration Date:</label><br>
-    <input type="month" id="expiration_date" name="expiration_date" required><br><br>
-
-    <label for="cvv">CVV:</label><br>
-    <input type="text" id="cvv" name="cvv" pattern="[0-9]{3,4}" required><br><br>
+    <div class="form-row">
+      <label for="card_number">Card Number:</label>
+      <input type="text" id="card_number" name="card_number" pattern="[0-9]{16}" required>
+      <label for="expiration_date">Expiration Date:</label>
+      <input type="month" id="expiration_date" name="expiration_date" required>
+      <label for="cvv">CVV:</label>
+      <input type="text" id="cvv" name="cvv" pattern="[0-9]{3,4}" required>
+    </div>
   </fieldset>
 
   <fieldset>
     <legend>Billing Address</legend>
-    <label for="billing_name">Name:</label><br>
-    <input type="text" id="billing_name" name="billing_name" required><br><br>
-
-    <label for="billing_address">Address:</label><br>
-    <input type="text" id="billing_address" name="billing_address" required><br><br>
-
-    <label for="billing_city">City:</label><br>
-    <input type="text" id="billing_city" name="billing_city" required><br><br>
-
-    <label for="billing_state">State:</label><br>
-    <input type="text" id="billing_state" name="billing_state" required><br><br>
-
-    <label for="billing_zip">ZIP Code:</label><br>
-    <input type="text" id="billing_zip" name="billing_zip" pattern="[0-9]{5}" required><br><br>
+    <div class="form-row">
+      <label for="billing_name">Name:</label>
+      <input type="text" id="billing_name" name="billing_name" required>
+      <label for="billing_address">Address:</label>
+      <input type="text" id="billing_address" name="billing_address" required>
+      <label for="billing_city">City:</label>
+      <input type="text" id="billing_city" name="billing_city" required>
+      <label for="billing_state">State:</label>
+      <input type="text" id="billing_state" name="billing_state" required> <br>
+      <label for="billing_zip">ZIP Code:</label>
+      <input type="text" id="billing_zip" name="billing_zip" pattern="[0-9]{5}" required>
+    </div>
   </fieldset>
 
   <input type="submit" value="Add Card">
@@ -137,6 +138,10 @@
   </div>
 </div>
 
+
+</body>
+
+</html>
 
 </body>
 
