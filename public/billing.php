@@ -62,8 +62,45 @@
       <h1>Billing</h1>
       <b>iCare is a groundbreaking home service that empowers homeowners to effortlessly manage their essential home services in a whole new way. With iCare, homeowners can create personalized home profiles encompassing every aspect of their living space, from mortgages and insurance to lawn care, internet, and more.</b>
       <hr>
-      <h3>Other Account Stuff</h3>
-      <p>Now you shall suffer...</p>
+
+
+<h2>Add Credit Card Information and Billing Address</h2>
+
+<form action="submit_payment.php" method="POST">
+  <fieldset>
+    <legend>Credit Card Information</legend>
+    <label for="card_number">Card Number:</label><br>
+    <input type="text" id="card_number" name="card_number" pattern="[0-9]{16}" required><br><br>
+
+    <label for="expiration_date">Expiration Date:</label><br>
+    <input type="month" id="expiration_date" name="expiration_date" required><br><br>
+
+    <label for="cvv">CVV:</label><br>
+    <input type="text" id="cvv" name="cvv" pattern="[0-9]{3,4}" required><br><br>
+  </fieldset>
+
+  <fieldset>
+    <legend>Billing Address</legend>
+    <label for="billing_name">Name:</label><br>
+    <input type="text" id="billing_name" name="billing_name" required><br><br>
+
+    <label for="billing_address">Address:</label><br>
+    <input type="text" id="billing_address" name="billing_address" required><br><br>
+
+    <label for="billing_city">City:</label><br>
+    <input type="text" id="billing_city" name="billing_city" required><br><br>
+
+    <label for="billing_state">State:</label><br>
+    <input type="text" id="billing_state" name="billing_state" required><br><br>
+
+    <label for="billing_zip">ZIP Code:</label><br>
+    <input type="text" id="billing_zip" name="billing_zip" pattern="[0-9]{5}" required><br><br>
+  </fieldset>
+
+  <input type="submit" value="Add Card">
+</form>
+
+
     </div>
     <div class="col-sm-2 sidenav">
 			<a href ="dashboard.php">
@@ -92,17 +129,15 @@
   </div>
 </div>
 
-</body>
-
-<body class="d-flex flex-column vh-100">
- <div class="container overflow-auto">
+<div class="container-fluid">
+ <div class="row">
+	<footer class = "col-sm-12 text-center">
+		<p>&copy; Copyright 2024, Hassan's Corporation</p>
+	</footer>
   </div>
-  <footer class="bg-black text-white mt-auto">
-      <div class="container text-center">
-          <p><p>&copy; Copyright 2024, Hassan's Corporation</p></p>
-      </div>
-  </footer>
+</div>
+
+
 </body>
+
 </html>
-
-
