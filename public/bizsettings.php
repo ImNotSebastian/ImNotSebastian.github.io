@@ -86,20 +86,33 @@
     <li class="list-group-item">
 		<button data-toggle="collapse" data-target="#ads">Manage Advertisments</button>
 			<div id="ads" class="collapse">
-         	<form action="/action_page.php">
-	      		<div class="form-group">
-			      	<label for="email">Email address:</label>
-				         <input type="email" class="form-control" id="email">
-			      </div>
-			      <div class="form-group">
-				      <label for="pwd">Password:</label>
-				         <input type="password" class="form-control" id="pwd">
-			      </div>
-			      <div class="checkbox">
-				      <label><input type="checkbox"> Remember me</label>
-			      </div>
-			      <button type="submit" class="btn btn-default">Submit</button>
-		      </form>
+          <br>
+          <button data-toggle="collapse" data-target="#addnewad">Add New</button>
+          <button>Remove Ad</button>
+          <button>See All</button>
+          <br>
+          <form action = "/action_page.php">
+            <div id="addnewad" class="collapse">
+              <label for="adName">Ad Name:</label>
+              <input type="AdName" class="form-control" id="adName">
+              <label for="#adType">Service Type:</label>
+              <select name="type" id="adType">
+                <option value="landscaping">Lawn/Landscaping</option>
+                <option value="internet">Internet</option>
+                <option value="interior">Interior</option>
+              </select>
+              <label for="#state">State:</label>
+              <select name="state" id="state">
+                <option value="idaho">ID</option>
+              </select>
+              <label for="#city">City</label>
+              <select name="city" id="city">
+                <option value="moscow">Moscow</option>
+                <option value="boise">Boise</option>
+              </select>
+            </div>
+          </form>
+        </form>
 			</div>
 		</li>
 		<li class="list-group-item">
