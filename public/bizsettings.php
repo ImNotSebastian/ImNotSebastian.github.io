@@ -88,7 +88,6 @@
 			<div id="ads" class="collapse">
           <br>
           <button data-toggle="collapse" data-target="#addnewad">Add New</button>
-          <button>Remove Ad</button>
           <button>See All</button>
           <br>
           <form action = "/action_page.php">
@@ -110,28 +109,31 @@
                 <option value="moscow">Moscow</option>
                 <option value="boise">Boise</option>
               </select>
+              <button>Create New</button>
             </div>
           </form>
-        </form>
 			</div>
 		</li>
 		<li class="list-group-item">
 		<button data-toggle="collapse" data-target="#add">Add Business</button>
 			<div id="add" class="collapse">
-         	<form action="/action_page.php">
-	      		<div class="form-group">
-			      	<label for="email">Email address:</label>
-				         <input type="email" class="form-control" id="email">
-			      </div>
-			      <div class="form-group">
-				      <label for="pwd">Password:</label>
-				         <input type="password" class="form-control" id="pwd">
-			      </div>
-			      <div class="checkbox">
-				      <label><input type="checkbox"> Remember me</label>
-			      </div>
-			      <button type="submit" class="btn btn-default">Submit</button>
-		      </form>
+        <form action = "/action_page.php">
+              <label for="adName">Business Name:</label>
+              <input type="AdName" class="form-control" id="adName">
+              <label for="#state">State:</label>
+              <select name="state" id="state">
+                <option value="idaho">ID</option>
+              </select>
+              <label for="#city">City:</label>
+              <select name="city" id="city">
+                <option value="moscow">Moscow</option>
+                <option value="boise">Boise</option>
+              </select>
+              <label for="#bizAddress">Business Address: </label>
+              <input type="businessAddress" class="form-control" id="bizAddress">
+              <button>Create New</button>
+              <br>
+        </form>
 			</div>
 		</li>
 		<li class="list-group-item">
