@@ -88,6 +88,7 @@
                <th>Service Requests</th>
                <th>Description</th>
                <th>Date Requested</th>
+               <th>Address</th>
             </tr>
          </thead>
          <tbody>
@@ -95,11 +96,13 @@
                <td>Sample Request</td>
                <td>Sample Description </td>
                <td>04/12/2024</td>
+               <td>83843 Moscow ID</td>
             </tr>
             <tr>
                <td>Sample Request 2</td>
                <td>Sample Description 2</td>
                <td>01/01/1970</td>
+               <td>83843 Moscow ID</td>
             </tr>
          <!-- Add more rows for each ticket -->
          </tbody>
