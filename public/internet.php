@@ -94,16 +94,18 @@
   </div>
 </div>
 
-</body>
-<!--Footer-->
-<body class="d-flex flex-column vh-100">
- <div class="container overflow-auto">
+
+<div class="container-fluid">
+ <div class="row">
+	<footer class = "col-sm-12 text-center">
+		<p>&copy; Copyright 2024, Hassan's Corporation</p>
+	</footer>
   </div>
-  <footer class="bg-black text-white mt-auto">
-      <div class="container text-center">
-          <p><p>&copy; Copyright 2024, Hassan's Corporation</p></p>
-      </div>
-  </footer>
+</div>
+
+
+
+
 </body>
 </html>
 
