@@ -80,7 +80,7 @@
 			<div class="checkbox">
 				<label><input type="checkbox"> Remember me</label>
 			</div>
-			<button type="submit" class="btn btn-default">Submit</button>
+         <a href="dashboard.php" class="btn btn-default" role="button">Submit</a>
 		</form>
     </div>
 	   
