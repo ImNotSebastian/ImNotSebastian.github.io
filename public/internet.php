@@ -41,7 +41,7 @@
         <li><a href="about.php">About</a></li>
         <li><a href="signup.php">Sign Up</a></li>
       </ul>
-      <ul class="nav navbar-nav navbar-right"
+      <ul class="nav navbar-nav navbar-right">
         <li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
       </ul>
     </div>
@@ -70,19 +70,23 @@
 		<a href ="dashboard.php">
 			<h2>Dashboard</h2>
 		</a>
-		<a href ="businesses.php">
-			<button type="button" class="btn btn-success btn-block">Businesses</button>
+		<a href ="landscaping.php">
+			<button type="button" class="btn btn-success btn-block">Landscaping</button>
 		</a>
       <hr>
-		<a href ="analytics.php">
-			<button type="button" class="btn btn-success btn-block">Analytics</button>
+		<a href ="internet.php">
+			<button type="button" class="btn btn-success btn-block">Internet</button>
 		</a>
       <hr>
-	  <a href ="ads.php">
-        <button type="button" class="btn btn-success btn-block">Manage Ads</button>
+	  <a href ="interior.php">
+        <button type="button" class="btn btn-success btn-block">Interior</button>
 	  </a>
       <hr>
-	   <a href ="bizdash.php">
+	   <a href ="billing.php">
+        <button type="button" class="btn btn-success btn-block">Billing</button>
+		</a>
+      <hr>
+	   <a href ="settings.php">
         <button type="button" class="btn btn-success btn-block">Settings</button>
 		</a>
     </div>
