@@ -60,54 +60,36 @@
 			<button data-toggle="collapse" data-target="#noti">Notification Settings</button>
 			<div id="noti" class="collapse">
          	<form action="/action_page.php">
-	      		<div class="form-group">
-			      	<label for="email">Email address:</label>
-				         <input type="email" class="form-control" id="email">
-			      </div>
-			      <div class="form-group">
-				      <label for="pwd">Password:</label>
-				         <input type="password" class="form-control" id="pwd">
-			      </div>
-			      <div class="checkbox">
-				      <label><input type="checkbox"> Remember me</label>
-			      </div>
-			      <button type="submit" class="btn btn-default">Submit</button>
-		      </form>
+
+
+               <div class="checkbox">
+                  <label><input type="checkbox" value="">Dynamic</label>
+               </div>
+               <div class="checkbox">
+                  <label><input type="checkbox" value="">Daily</label>
+               </div>
+               <div class="checkbox disabled">
+                  <label><input type="checkbox" value="">Weekly</label>
+               </div>
+            </form>
+
          </div>
 		</li>
 		<li class="list-group-item">
-		<button data-toggle="collapse" data-target="#add">Add Property</button>
-			<div id="add" class="collapse">
-         	<form action="/action_page.php">
-	      		<div class="form-group">
-			      	<label for="email">Email address:</label>
-				         <input type="email" class="form-control" id="email">
-			      </div>
-			      <div class="form-group">
-				      <label for="pwd">Password:</label>
-				         <input type="password" class="form-control" id="pwd">
-			      </div>
-			      <div class="checkbox">
-				      <label><input type="checkbox"> Remember me</label>
-			      </div>
-			      <button type="submit" class="btn btn-default">Submit</button>
-		      </form>
-			</div>
-		</li>
-		<li class="list-group-item">
-			<button data-toggle="collapse" data-target="#remo">Remove Property</button>
+			<button data-toggle="collapse" data-target="#remo">Change Phone #</button>
 			<div id="remo" class="collapse">
          	<form action="/action_page.php">
 	      		<div class="form-group">
-			      	<label for="email">Email address:</label>
-				         <input type="email" class="form-control" id="email">
+			      	<label for="email">Old Phone #: </label>
+				         <input type="text" class="form-control" id="email">
+			      </div>
+			      <div class="form-group">
+				      <label for="pwd">New Phone #:</label>
+				         <input type="password" class="form-control" id="pwd">
 			      </div>
 			      <div class="form-group">
 				      <label for="pwd">Password:</label>
 				         <input type="password" class="form-control" id="pwd">
-			      </div>
-			      <div class="checkbox">
-				      <label><input type="checkbox"> Remember me</label>
 			      </div>
 			      <button type="submit" class="btn btn-default">Submit</button>
 		      </form>
@@ -118,15 +100,16 @@
 			<div id="change" class="collapse">
          	<form action="/action_page.php">
 	      		<div class="form-group">
-			      	<label for="email">Email address:</label>
+			      	<label for="email">Old Password:</label>
 				         <input type="email" class="form-control" id="email">
 			      </div>
 			      <div class="form-group">
-				      <label for="pwd">Password:</label>
+				      <label for="pwd"> New Password:</label>
 				         <input type="password" class="form-control" id="pwd">
 			      </div>
-			      <div class="checkbox">
-				      <label><input type="checkbox"> Remember me</label>
+			      <div class="form-group">
+				      <label for="pwd"> Confirm Password:</label>
+				         <input type="password" class="form-control" id="pwd">
 			      </div>
 			      <button type="submit" class="btn btn-default">Submit</button>
 		      </form>
@@ -137,17 +120,14 @@
 			<div id="delete" class="collapse">
          	<form action="/action_page.php">
 	      		<div class="form-group">
-			      	<label for="email">Email address:</label>
-				         <input type="email" class="form-control" id="email">
-			      </div>
-			      <div class="form-group">
-				      <label for="pwd">Password:</label>
+			      	<label for="email">Password:</label>
 				         <input type="password" class="form-control" id="pwd">
 			      </div>
-			      <div class="checkbox">
-				      <label><input type="checkbox"> Remember me</label>
+			      <div class="form-group">
+				      <label for="pwd">Confirm Password:</label>
+				         <input type="password" class="form-control" id="pwd">
 			      </div>
-			      <button type="submit" class="btn btn-default">Submit</button>
+			      <button type="submit" class="btn btn-default">Remove Account</button>
 		      </form>
 			</div>
 		</li>
@@ -180,15 +160,14 @@
   </div>
 </div>
 
+<div class="container-fluid">
+ <div class="row">
+	<footer class = "col-sm-12 text-center">
+		<p>&copy; Copyright 2024, Hassan's Corporation</p>
+	</footer>
+  </div>
+</div>
+
 </body>
 
-<body class="d-flex flex-column vh-100">
- <div class="container overflow-auto">
-  </div>
-  <footer class="bg-black text-white mt-auto">
-      <div class="container text-center">
-          <p><p>&copy; Copyright 2024, Hassan's Corporation</p></p>
-      </div>
-  </footer>
-</body>
 </html>
