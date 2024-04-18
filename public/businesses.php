@@ -63,8 +63,24 @@
       <h1>Account Overview</h1>
       <b>iCare is a groundbreaking home service that empowers homeowners to effortlessly manage their essential home services in a whole new way. With iCare, homeowners can create personalized home profiles encompassing every aspect of their living space, from mortgages and insurance to lawn care, internet, and more.</b>
       <hr>
-      <h3>Other Account Stuff</h3>
-      <p>Now you shall suffer...</p>
+      <h3>Services</h3>
+
+
+
+
+   <form action="submit_service.php" method="POST">
+      <label for="service_name">Service Name:</label><br>
+      <input type="text" id="service_name" name="service_name" required><br><br>
+
+      <label for="service_description">Service Description:</label><br>
+      <textarea id="service_description" name="service_description" rows="4" cols="50" required></textarea><br><br>
+
+      <label for="price">Price:</label><br>
+      <input type="number" id="price" name="price" required><br><br>
+
+      <input type="submit" value="Submit">
+   </form>
+
     </div>
     <div class="col-sm-2 sidenav">
 		<a href ="bizdash.php">
