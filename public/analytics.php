@@ -14,6 +14,21 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    th, td,tbody {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+
 </head>
 <body>
 
@@ -63,8 +78,32 @@
       <h1>Account Overview</h1>
       <b>iCare is a groundbreaking home service that empowers homeowners to effortlessly manage their essential home services in a whole new way. With iCare, homeowners can create personalized home profiles encompassing every aspect of their living space, from mortgages and insurance to lawn care, internet, and more.</b>
       <hr>
-      <h3>Other Account Stuff</h3>
-      <p>Now you shall suffer...</p>
+
+
+      <h2>View Tickets</h2>
+
+      <table>
+         <thead>
+            <tr>
+               <th>Service Requests</th>
+               <th>Description</th>
+               <th>Offer</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td>Sample Request</td>
+               <td>Sample Description </td>
+               <td>$2000</td>
+            </tr>
+            <tr>
+               <td>Sample Request 2</td>
+               <td>Sample Description 2</td>
+               <td>$500</td>
+            </tr>
+         <!-- Add more rows for each ticket -->
+         </tbody>
+      </table>
     </div>
     <div class="col-sm-2 sidenav">
 		<a href ="bizdash.php">
