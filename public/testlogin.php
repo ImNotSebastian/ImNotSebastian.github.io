@@ -8,15 +8,15 @@
 <form action="testinsert.php" method="post"> 
 	<p> 
     	<label for="username">Username:</label> 
-        <input type="text" name="first_name" id="username"> 
+        <input type="text" name="UserName" id="username"> 
     </p> 
     <p> 
     	<label for="name">Name:</label> 
-        <input type="text" name="last_name" id="name"> 
+        <input type="text" name="Name" id="name"> 
     </p> 
     <p> 
     	<label for="password">Password:</label> 
-        <input type="text" name="email" id="password"> 
+        <input type="text" name="Password" id="password"> 
     </p> 
     <input type="submit" value="Add Records"> 
 </form> 
