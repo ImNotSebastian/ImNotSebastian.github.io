@@ -61,7 +61,14 @@
     <div class="col-sm-8 text-center">
 	   <img src="../style/iCareLogo.png" class="img-fluid" alt = "Logo">
 		<h1>Your Personal Property Manager</h1>
-		<form action="/action_page.php">
+      <form action="/action_page.php">
+
+         <div class="btn-group">
+               <a href="login.php" class="btn btn-primary" role="button">Home Owner</a>
+               <a href="bizlogin.php" class="btn btn-default" role="button">Business</a>
+         </div>
+
+
 			<div class="form-group">
 				<label for="email">Email address:</label>
 				<input type="email" class="form-control" id="email">
@@ -100,9 +107,6 @@
       </div>
   </footer>
 </body>
-
-
-
 
 
 
