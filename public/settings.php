@@ -13,16 +13,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-
 </head>
 <body>
-
-
-
-
-
-
-
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -67,38 +59,99 @@
 		<li class="list-group-item">
 			<button data-toggle="collapse" data-target="#noti">Notification Settings</button>
 			<div id="noti" class="collapse">
-				Check Boxes and sliders will be here
-			</div>
+         	<form action="/action_page.php">
+	      		<div class="form-group">
+			      	<label for="email">Email address:</label>
+				         <input type="email" class="form-control" id="email">
+			      </div>
+			      <div class="form-group">
+				      <label for="pwd">Password:</label>
+				         <input type="password" class="form-control" id="pwd">
+			      </div>
+			      <div class="checkbox">
+				      <label><input type="checkbox"> Remember me</label>
+			      </div>
+			      <button type="submit" class="btn btn-default">Submit</button>
+		      </form>
+         </div>
 		</li>
 		<li class="list-group-item">
 		<button data-toggle="collapse" data-target="#add">Add Property</button>
 			<div id="add" class="collapse">
-				Check Boxes and sliders will be here
+         	<form action="/action_page.php">
+	      		<div class="form-group">
+			      	<label for="email">Email address:</label>
+				         <input type="email" class="form-control" id="email">
+			      </div>
+			      <div class="form-group">
+				      <label for="pwd">Password:</label>
+				         <input type="password" class="form-control" id="pwd">
+			      </div>
+			      <div class="checkbox">
+				      <label><input type="checkbox"> Remember me</label>
+			      </div>
+			      <button type="submit" class="btn btn-default">Submit</button>
+		      </form>
 			</div>
 		</li>
 		<li class="list-group-item">
 			<button data-toggle="collapse" data-target="#remo">Remove Property</button>
 			<div id="remo" class="collapse">
-				Check Boxes and sliders will be here
+         	<form action="/action_page.php">
+	      		<div class="form-group">
+			      	<label for="email">Email address:</label>
+				         <input type="email" class="form-control" id="email">
+			      </div>
+			      <div class="form-group">
+				      <label for="pwd">Password:</label>
+				         <input type="password" class="form-control" id="pwd">
+			      </div>
+			      <div class="checkbox">
+				      <label><input type="checkbox"> Remember me</label>
+			      </div>
+			      <button type="submit" class="btn btn-default">Submit</button>
+		      </form>
 			</div>
 		</li>
 		<li class="list-group-item">
 			<button data-toggle="collapse" data-target="#change">Change Password</button>
 			<div id="change" class="collapse">
-				Check Boxes and sliders will be here
+         	<form action="/action_page.php">
+	      		<div class="form-group">
+			      	<label for="email">Email address:</label>
+				         <input type="email" class="form-control" id="email">
+			      </div>
+			      <div class="form-group">
+				      <label for="pwd">Password:</label>
+				         <input type="password" class="form-control" id="pwd">
+			      </div>
+			      <div class="checkbox">
+				      <label><input type="checkbox"> Remember me</label>
+			      </div>
+			      <button type="submit" class="btn btn-default">Submit</button>
+		      </form>
 			</div>
 		</li>
 		<li class="list-group-item">
 			<button data-toggle="collapse" data-target="#delete">Delete Account</button>
 			<div id="delete" class="collapse">
-				Check Boxes and sliders will be here
+         	<form action="/action_page.php">
+	      		<div class="form-group">
+			      	<label for="email">Email address:</label>
+				         <input type="email" class="form-control" id="email">
+			      </div>
+			      <div class="form-group">
+				      <label for="pwd">Password:</label>
+				         <input type="password" class="form-control" id="pwd">
+			      </div>
+			      <div class="checkbox">
+				      <label><input type="checkbox"> Remember me</label>
+			      </div>
+			      <button type="submit" class="btn btn-default">Submit</button>
+		      </form>
 			</div>
 		</li>
-	  </ul>
-     
-	  
-	  
-	  
+	  </ul> 
     </div>
     <div class="col-sm-2 sidenav">
 		<a href ="dashboard.php">
@@ -139,5 +192,3 @@
   </footer>
 </body>
 </html>
-
-
