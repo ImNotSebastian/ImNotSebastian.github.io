@@ -58,7 +58,7 @@
 	   <img src="../style/iCareLogo.png" class="img-fluid" alt = "Logo">
       <h1>Landscaping</h1>
    
-      <embed src="https://www.measuremylawn.com" style="width:600px; height: 550px;">
+      <embed src="https://www.measuremylawn.com" style="width:100%; height: 550px;">
      
     </div>
 	

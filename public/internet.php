@@ -62,6 +62,7 @@
       <h1>Internet</h1>
       <b>iCare is a groundbreaking home service that empowers homeowners to effortlessly manage their essential home services in a whole new way. With iCare, homeowners can create personalized home profiles encompassing every aspect of their living space, from mortgages and insurance to lawn care, internet, and more.</b>
       <hr>
+      <embed src="https://broadbandnow.com/bandwidth-calculator" style="width:100%; height: 550px;">
       <h3>Other Account Stuff</h3>
       <p>Now you shall suffer...</p>
     </div>
