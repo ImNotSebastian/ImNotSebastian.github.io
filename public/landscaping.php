@@ -57,7 +57,16 @@
     <div class="col-sm-8 text-center">
 	   <img src="../style/iCareLogo.png" class="img-fluid" alt = "Logo">
       <h1>Landscaping</h1>
-   
+      <p>To assist with your landscaping requests, iCare needs some information from you.</p>
+      <form>
+      <label for="lawnsize">Lawn Size (In Square Feet):</label>
+      <input type="LawnSize" class="form-control" id="lawnsize">
+      <label for="treenum">Lawn Size (In Square Feet):</label>
+      <input type="TreeNum" class="form-control" id="treenum">
+      <br>
+      <button id="confirmbutton" name="confirmbutton" class="btn btn-primary">Confirm</button>
+      </form>
+      <br>
       <embed src="https://www.measuremylawn.com" style="width:100%; height: 550px;">
      
     </div>
