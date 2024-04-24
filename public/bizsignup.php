@@ -16,16 +16,16 @@ if ($conn->connect_error) {
 // Insert data into the database
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $Name = $_POST["name"];
-    $PhoneNum = $_POST["PhoneNum"]; // Added PhoneNum
+    $PhoneNum = $_POST["PhoneNum"];
     $UserName = $_POST["UserName"];
     $Password = $_POST["pwd"];
     // add more fields as needed
 
-      // Construct the SQL query
-    $sql = "INSERT INTO Homeowners (Name, PhoneNum, UserName, Password) VALUES ('$Name', ";
+    // Construct the SQL query for BusinessOwners table
+    $sql = "INSERT INTO BusinessOwners (Name, PhoneNum, UserName, Password) VALUES ('$Name', ";
     $sql .= $PhoneNum ? "'$PhoneNum'" : "NULL"; // Use NULL if PhoneNum is empty
     $sql .= ", '$UserName', '$Password')";
-    
+
     if ($conn->query($sql) === TRUE) {
         echo "New record created successfully";
     } else {
@@ -101,8 +101,8 @@ $conn->close();
 		<h1>Your Personal Property Manager</h1>
 		
 		<div class="btn-group">
-               <a href="signup.php" class="btn btn-primary" role="button">Home Owner</a>
-               <a href="bizsignup.php" class="btn btn-default" role="button">Business</a>
+               <a href="signup.php" class="btn btn-default" role="button">Home Owner</a>
+               <a href="bizsignup.php" class="btn btn-primary" role="button">Business</a>
          </div>
 		
 		<form action="signup.php" method="POST">
@@ -155,9 +155,4 @@ $conn->close();
 </div>
 
 </body>
-
-
-
-</html>
-
 
