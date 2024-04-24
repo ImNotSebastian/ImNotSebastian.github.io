@@ -60,9 +60,18 @@
 
     <div class="col-sm-8 text-center">
 	   <img src="../style/iCareLogo.png" class="img-fluid" alt = "Logo">
-      <h1>Account Overview</h1>
-      <b>iCare is a groundbreaking home service that empowers homeowners to effortlessly manage their essential home services in a whole new way. With iCare, homeowners can create personalized home profiles encompassing every aspect of their living space, from mortgages and insurance to lawn care, internet, and more.</b>
+      <h1>Internet</h1>
       <hr>
+      <p>iCare needs some information about your internet needs for your request. Please enter your Mbs and device count below after going through the embedded web tool.</p>
+      <form>
+        <label for="mbs">Mbs:</label>
+        <input type="Mbs" class="form-control" id="mbs">
+        <label for="devicenum">Device Count:</label>
+        <input type="DeviceNum" class="form-control" id="devicenum">
+        <br>
+        <button id="confirmbutton" name="confirmbutton" class="btn btn-primary">Confirm</button>
+      </form>
+      <br>
       <embed src="https://broadbandnow.com/bandwidth-calculator" style="width:100%; height: 550px;">
       <h3>Other Account Stuff</h3>
       <p>Now you shall suffer...</p>
