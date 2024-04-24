@@ -61,7 +61,7 @@
       <form>
       <label for="lawnsize">Lawn Size (In Square Feet):</label>
       <input type="LawnSize" class="form-control" id="lawnsize">
-      <label for="treenum">Lawn Size (In Square Feet):</label>
+      <label for="treenum">Tree Count:</label>
       <input type="TreeNum" class="form-control" id="treenum">
       <br>
       <button id="confirmbutton" name="confirmbutton" class="btn btn-primary">Confirm</button>
