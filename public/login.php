@@ -1,4 +1,46 @@
-<!DOCTYPE html>
+<?php
+
+session_start(); // Start session
+// Database configuration
+$servername = "localhost";
+$username = "root"; // database username
+$password = ""; // database password
+$dbname = "iCare"; // database name
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Check if form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get username and password from the form
+    $UserName = $_POST["email"];
+    $Password = $_POST["pwd"];
+    
+    // SQL query to check if the username and password match
+    $sql = "SELECT * FROM Homeowners WHERE UserName='$UserName' AND Password='$Password'";
+    $result = $conn->query($sql);
+    
+    if ($result->num_rows == 1) {
+        // Login successful, set session variables
+        $_SESSION["UserName"] = $UserName;
+        // Redirect to dashboard
+        header("Location: dashboard.php");
+        exit();
+    } else {
+        // Invalid username or password
+        $error = "Invalid username or password";
+    }
+}
+
+// Close connection
+$conn->close();
+?>
+
 <html lang="en">
 <head>
 <link rel="stylesheet" href="../style/styles.css">
@@ -61,7 +103,7 @@
     <div class="col-sm-8 text-center">
 	   <img src="../style/iCareLogo.png" class="img-fluid" alt = "Logo">
 		<h1>Your Personal Property Manager</h1>
-      <form action="/action_page.php">
+      <form action="login.php" method="POST">
 
          <div class="btn-group">
                <a href="login.php" class="btn btn-primary" role="button">Home Owner</a>
@@ -71,16 +113,19 @@
 
 			<div class="form-group">
 				<label for="email">Email address:</label>
-				<input type="email" class="form-control" id="email">
+				<input type="email" class="form-control" id="email" name="email">
 			</div>
+			
 			<div class="form-group">
 				<label for="pwd">Password:</label>
-				<input type="password" class="form-control" id="pwd">
+				<input type="password" class="form-control" id="pwd" name="pwd">
 			</div>
+			
+			
 			<div class="checkbox">
 				<label><input type="checkbox"> Remember me</label>
 			</div>
-         <a href="dashboard.php" class="btn btn-default" role="button">Submit</a>
+       		<button type="submit" class="btn btn-default">Submit</button>
 		</form>
     </div>
 	   
