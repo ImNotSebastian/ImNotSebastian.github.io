@@ -1,4 +1,42 @@
-<!DOCTYPE html>
+<?php
+// Database configuration
+$servername = "localhost";
+$username = "root"; // database username
+$password = ""; //database password, very secure
+$dbname = "iCare"; // Replace with your database name
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Insert data into the database
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $Name = $_POST["name"];
+    $PhoneNum = $_POST["PhoneNum"]; // Added PhoneNum
+    $UserName = $_POST["UserName"];
+    $Password = $_POST["pwd"];
+    // add more fields as needed
+
+      // Construct the SQL query
+    $sql = "INSERT INTO Homeowners (Name, PhoneNum, UserName, Password) VALUES ('$Name', ";
+    $sql .= $PhoneNum ? "'$PhoneNum'" : "NULL"; // Use NULL if PhoneNum is empty
+    $sql .= ", '$UserName', '$Password')";
+    
+    if ($conn->query($sql) === TRUE) {
+        echo "New record created successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+
+// Close connection
+$conn->close();
+?>
+
 <html lang="en">
 <head>
 <link rel="stylesheet" href="../style/styles.css">
@@ -61,24 +99,32 @@
     <div class="col-sm-8 text-center">
 	   <img src="../style/iCareLogo.png" class="img-fluid" alt = "Logo">
 		<h1>Your Personal Property Manager</h1>
-		<form action="/action_page.php">
-			<div class="form-group">
-				<label for="email">Email address:</label>
-				<input type="email" class="form-control" id="email">
-			</div>
-			<div class="form-group">
-				<label for="email2">Confirm Email address:</label>
-				<input type="email" class="form-control" id="email2">
-			</div>
-			<div class="form-group">
-				<label for="pwd">Password:</label>
-				<input type="password" class="form-control" id="pwd">
-			</div>
-			<div class="checkbox">
-				<label><input type="checkbox"> Sign up for Newsletter</label>
-			</div>
-			<button type="submit" class="btn btn-default">Submit</button>
-		</form>
+		<form action="signup.php" method="POST">
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" id="name" name="name">
+    </div>
+    <div class="form-group">
+        <label for="PhoneNum">Phone Number:</label>
+        <input type="text" class="form-control" id="PhoneNum" name="PhoneNum">
+    </div>
+    <div class="form-group">
+        <label for="UserName">Email address:</label>
+        <input type="email" class="form-control" id="UserName" name="UserName">
+    </div>
+    <div class="form-group">
+        <label for="UserName2">Confirm Email address:</label>
+        <input type="email" class="form-control" id="UserName2" name="UserName2">
+    </div>
+    <div class="form-group">
+        <label for="pwd">Password:</label>
+        <input type="password" class="form-control" id="pwd" name="pwd">
+    </div>
+    <div class="checkbox">
+        <label><input type="checkbox" name="newsletter"> Sign up for Newsletter</label>
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>
     </div>
 	
 	 <div class="col-sm-2 sidenav">
@@ -90,19 +136,21 @@
       </div>
   </div>
 </div>
-</body>
-
-
-<!--Footer-->
-<body class="d-flex flex-column vh-100">
  <div class="container overflow-auto">
   </div>
-  <footer class="bg-black text-white mt-auto">
-      <div class="container text-center">
-          <p><p>&copy; Copyright 2024, Hassan's Corporation</p></p>
-      </div>
-  </footer>
+ 
+ 
+<div class="container-fluid">
+ <div class="row">
+	<footer class = "col-sm-12 text-center">
+		<p>&copy; Copyright 2024, Hassan's Corporation</p>
+	</footer>
+  </div>
+</div>
+
 </body>
+
+
 
 </html>
 
