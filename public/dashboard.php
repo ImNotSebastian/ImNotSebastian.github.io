@@ -63,8 +63,42 @@
       <h1>Account Overview</h1>
       <b>iCare is a groundbreaking home service that empowers homeowners to effortlessly manage their essential home services in a whole new way. With iCare, homeowners can create personalized home profiles encompassing every aspect of their living space, from mortgages and insurance to lawn care, internet, and more.</b>
       <hr>
+      <br>
+          <div class="row">
+            <div class="col-sm-4">
+              <h3><div class="card">
+                    <div class="card-body">
+                      <h3 class="card-title">Landscaping</h3>
+                      <h4 class="card-text">Ladscaping Information and Requests</h4>
+                      <div id="landscaping" class="collapse">
+                        <div id="landscaping_new_info" class="collapse">
+                        </div>
+                        <button class="btn btn-primary" data-toggle="collapse" data-target="landscaping_new_info">New Request</button>
+                      </div>
+        	            <button class="btn btn-primary" data-toggle="collapse" data-target="landscaping">Open Section</button>
+        		        </div>
+             	  	</div></h3>
+            </div>
+              <div class="col-sm-4 col-5"><h3>
+                <div class="card">
+                    <div class="card-body">
+                      <h3 class="card-title">Interior</h4>
+                      <h4 class="card-text">Interior Information and Requests</h4>
+                      <a href="#" class="btn btn-primary">Open Section</a>
+                    </div>
+                </div></h3>
+              </div>
+              <div class="col-sm-4"><h3>
+                <div class="card">
+                  <div class="card-body">
+                    <h3 class="card-title">Internet</h3>
+                    <h4 class="card-text">Internet Information and Requests</h4>
+                    <a href="#" class="btn btn-primary">Open Section</a>
+                  </div>
+                </div></h3>
+              </div>
+          </div>
       <h3>Other Account Stuff</h3>
-      <p>Now you shall suffer...</p>
     </div>
     <div class="col-sm-2 sidenav">
 		<a href ="dashboard.php">
