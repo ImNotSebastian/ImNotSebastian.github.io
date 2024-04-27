@@ -1,44 +1,4 @@
-<?php
-session_start(); // Start session
-// Database configuration
-$servername = "localhost";
-$username = "root"; // database username
-$password = ""; // database password
-$dbname = "iCare"; // database name
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Check if form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get username and password from the form
-    $username = $_POST["email"];
-    $password = $_POST["pwd"];
-    
-    // SQL query to check if the username and password match
-    $sql = "SELECT * FROM BusinessOwners WHERE UserName='$username' AND Password='$password'";
-    $result = $conn->query($sql);
-    
-    if ($result->num_rows == 1) {
-        // Login successful, set session variables
-        $_SESSION["username"] = $username;
-        // Redirect to dashboard
-        header("Location: bizlogin.php");
-        exit();
-    } else {
-        // Invalid username or password
-        $error = "Invalid username or password";
-    }
-}
-
-// Close connection
-$conn->close();
-?>
 <html lang="en">
 <head>
 <link rel="stylesheet" href="../style/styles.css">
