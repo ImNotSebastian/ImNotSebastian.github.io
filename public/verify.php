@@ -15,7 +15,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
-	echo "Connection Failed!<br>";
+    echo "Connection Failed!<br>";
     die("Connection failed: " . $conn->connect_error);
 }
 
@@ -44,8 +44,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result = $conn->query($sql);
 
         if ($result && $result->num_rows == 1) {
-            // Login successful, set session variables
-            $_SESSION["username"] = $username;
+            // Login successful, fetch user data
+            $row = $result->fetch_assoc();
+
+            // Set session variables for each column in the respective table
+            if ($user_type === 'Homeowners') {
+                $_SESSION["username"] = $row["UserName"];
+                $_SESSION["fullname"] = $row["Name"];
+                $_SESSION["phone"] = $row["PhoneNum"];
+                $_SESSION["business_id"] = $row["BusinessD"];
+                // Add more session variables for other columns as needed
+            } elseif ($user_type === 'BusinessOwners') {
+                $_SESSION["username"] = $row["UserName"];
+                $_SESSION["fullname"] = $row["Name"];
+                $_SESSION["phone"] = $row["PhoneNum"];
+                $_SESSION["property_id"] = $row["PropertyID"];
+                // Add more session variables for other columns as needed
+            }
+
             // Redirect based on user type
             if ($user_type === 'Homeowners') {
                 header("Location: dashboard.php");
@@ -62,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     } else {
         // Invalid user type
-         echo "Invalid usertype";
+        echo "Invalid usertype";
         $error = "Invalid user type";
     }
 }
