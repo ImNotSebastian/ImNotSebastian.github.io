@@ -85,10 +85,59 @@ if(isset($_SESSION["username"])) {
           <p class="lead">
           <button data-toggle="collapse" data-target="#createproperty">Create New Property</button>
           <div id="createproperty" class="collapse">
-            <label for="createpropertyname">Property Address:</label>
-            <input type="propertyaddress" class="form-control" id="createpropertyname">
-            <br>
-            <button>Create</button>
+            
+             <h3>Create New Property</h3>
+                <?php
+                session_start(); // Start session
+
+                // Database configuration
+                $servername = "localhost";
+                $username = "root"; // database username
+                $password = ""; // database password
+                $dbname = "iCare"; // database name
+
+                // Create connection
+                $conn = new mysqli($servername, $username, $password, $dbname);
+
+                // Check connection
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                }
+
+                // Check if form is submitted
+                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                    // Get property address from the form
+                    $address = $_POST["createpropertyname"];
+
+                    // Get the owner ID from the session
+                    if (isset($_SESSION["customer_id"])) {
+                        $ownerID = $_SESSION["customer_id"];
+
+                        // SQL query to insert new property into the Properties table
+                        $sql = "INSERT INTO Properties (Address, OwnerID) VALUES ('$address', '$ownerID')";
+
+                        if ($conn->query($sql) === TRUE) {
+                            // Property added successfully
+                            echo "New property added successfully";
+                        } else {
+                            // Error adding property
+                            echo "Error: " . $sql . "<br>" . $conn->error;
+                        }
+                    } else {
+                        // Redirect if owner ID is not found in session
+                        header("Location: login.php");
+                        exit(); // Make sure to exit after redirection
+                    }
+                }
+                ?>
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                    <label for="createpropertyname">Property Address:</label>
+                    <input type="text" class="form-control" id="createpropertyname" name="createpropertyname">
+                    <br>
+                    <button type="submit">Create</button>
+                </form>
+            
+            
           </div>				  
           </p>
         </div>		

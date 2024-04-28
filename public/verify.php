@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION["username"] = $row["UserName"];
                 $_SESSION["fullname"] = $row["Name"];
                 $_SESSION["phone"] = $row["PhoneNum"];
-                $_SESSION["business_id"] = $row["BusinessD"];
+                $_SESSION["customer_id"] = $row["CustomerID"];
                 // Add more session variables for other columns as needed
             } elseif ($user_type === 'BusinessOwners') {
                 $_SESSION["username"] = $row["UserName"];

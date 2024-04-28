@@ -42,7 +42,7 @@
         <li><a href="signup.php">Sign Up</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="logout.php"><span class="glyphicon glyphicon-log-in"></span> Sign Out</a></li>
+        <li><a href="logout.php"><span class="glyphicon glyphicon-log-in"></span> Log in</a></li>
       </ul>
     </div>
   </div>
