@@ -1,28 +1,28 @@
 <?php
 session_start(); // Start session
 
-function updateNotificationSettings($dynamic, $daily, $weekly) {
+function updateNotificationSettings($dynamic, $daily, $weekly) 
+{
     // Handle updating notification settings here
-    // You can access the form values via the function parameters
-    // Implement your logic to update the settings in the database
+    
 }
 
-function changePhoneNumber($oldPhone, $newPhone, $password) {
+function changePhoneNumber($oldPhone, $newPhone, $password)
+ {
     // Handle changing phone number here
-    // You can access the form values via the function parameters
-    // Implement your logic to update the phone number in the database
+   
 }
 
-function changePassword($oldPassword, $newPassword, $confirmPassword) {
+function changePassword($oldPassword, $newPassword, $confirmPassword)
+{
     // Handle changing password here
-    // You can access the form values via the function parameters
-    // Implement your logic to update the password in the database
+
 }
 
-function deleteAccount($password, $confirmPassword) {
+function deleteAccount($password, $confirmPassword) 
+{
     // Handle deleting account here
-    // You can access the form values via the function parameters
-    // Implement your logic to delete the account from the database
+   
 }
 
 // Check if form is submitted
