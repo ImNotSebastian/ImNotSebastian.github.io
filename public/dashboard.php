@@ -66,6 +66,16 @@
       <div>
         <div>
           <h1 class="display-3">Properties</h1>
+          
+<?php
+          
+    session_start(); // Start session      
+          
+          //do code stuff to print/echo the tables using queries
+        
+     	// Close connection
+	$conn->close();
+?>    
           <p class="lead">See and edit properties</p>		  
           <p>Insert properties here.</p>
           <!-- No, for realsies, insert properties here -->		  
