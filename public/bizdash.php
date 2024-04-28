@@ -61,7 +61,20 @@
     <div class="col-sm-8 text-center">
 	   <img src="../style/iCareLogo.png" class="img-fluid" alt = "Logo">
       <h1>Account Overview</h1>
-      <b>iCare is a groundbreaking home service that empowers homeowners to effortlessly manage their essential home services in a whole new way. With iCare, homeowners can create personalized home profiles encompassing every aspect of their living space, from mortgages and insurance to lawn care, internet, and more.</b>
+      
+        <?php
+session_start(); // Start session
+
+// Check if the 'username' session variable is set
+if(isset($_SESSION["username"])) {
+    // Echo a greeting using the 'username' session variable
+    echo "<b>Hello " . $_SESSION["username"] . "</b><br>";
+} else {
+    // If 'username' session variable is not set, echo a generic greeting
+    echo "Hello Mystery User, how did You get to the dashboard w/o an account?!";
+}
+?>
+
       <hr>
       <h3>Other Account Stuff</h3>
       <p>Now you shall suffer...</p>
