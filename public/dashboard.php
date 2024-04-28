@@ -63,40 +63,134 @@
       <h1>Account Overview</h1>
       <b>iCare is a groundbreaking home service that empowers homeowners to effortlessly manage their essential home services in a whole new way. With iCare, homeowners can create personalized home profiles encompassing every aspect of their living space, from mortgages and insurance to lawn care, internet, and more.</b>
       <hr>
+      <div>
+        <div>
+          <h1 class="display-3">Properties</h1>
+          <p class="lead">See and edit properties</p>		  
+          <p>Insert properties here.</p>
+          <!-- No, for realsies, insert properties here -->		  
+          <p class="lead">
+          <button data-toggle="collapse" data-target="#createproperty">Create New Property</button>
+          <div id="createproperty" class="collapse">
+            <label for="createpropertyname">Property Address:</label>
+            <input type="propertyaddress" class="form-control" id="createpropertyname">
+            <br>
+            <button>Create</button>
+          </div>				  
+          </p>
+        </div>		
+      </div>
       <br>
           <div class="row">
             <div class="col-sm-4">
               <h3><div class="card">
                     <div class="card-body">
                       <h3 class="card-title">Landscaping</h3>
-                      <h4 class="card-text">Ladscaping Information and Requests</h4>
-                      <div id="landscaping" class="collapse">
-                        <div id="landscaping_new_info" class="collapse">
-                        </div>
-                        <button class="btn btn-primary" data-toggle="collapse" data-target="landscaping_new_info">New Request</button>
-                      </div>
-        	            <button class="btn btn-primary" data-toggle="collapse" data-target="landscaping">Open Section</button>
-        		        </div>
-             	  	</div></h3>
+                      <h4 class="card-text">Landscaping Information and Requests</h4>
+                      <button data-toggle="collapse" data-target="#Lads">Open Section</button>
+			                <div id="Lads" class="collapse">
+                          <br>
+                          <button data-toggle="collapse" data-target="#Lnewreq">Add New</button>
+                          <button>See All</button>
+                          <!-- Add Information Output Here-->
+                          <br>
+                          <form action = "">
+                            <div id="Lnewreq" class="collapse">
+                              <label for="LreqName">Request Description:</label>
+                              <input type="LDescription" class="form-control" id="LDescription">
+                              <label for="#state">State:</label>
+                              <select name="state" id="state">
+                                <option value="idaho">ID</option>
+                              </select>
+                              <label for="#city">City</label>
+                              <select name="city" id="city">
+                                <option value="moscow">Moscow</option>
+                                <option value="boise">Boise</option>
+                              </select>
+                              <label for="#property">Property</label>
+                              <select name="property" id="property">
+                                <option value="">Address</option>
+                              </select>
+                              <br>
+                              <button>Create New</button>
+                            </div>
+                          </form>
+			              </div>                    
+        		      </div>
+             	</div></h3>
             </div>
-              <div class="col-sm-4 col-5"><h3>
-                <div class="card">
-                    <div class="card-body">
-                      <h3 class="card-title">Interior</h4>
+            <div class="col-sm-4 col-5"><h3>
+              <div class="card">
+              <div class="card-body">
+                      <h3 class="card-title">Interior</h3>
                       <h4 class="card-text">Interior Information and Requests</h4>
-                      <a href="#" class="btn btn-primary">Open Section</a>
-                    </div>
-                </div></h3>
-              </div>
-              <div class="col-sm-4"><h3>
-                <div class="card">
-                  <div class="card-body">
-                    <h3 class="card-title">Internet</h3>
-                    <h4 class="card-text">Internet Information and Requests</h4>
-                    <a href="#" class="btn btn-primary">Open Section</a>
-                  </div>
-                </div></h3>
-              </div>
+                      <button data-toggle="collapse" data-target="#Interiorads">Open Section</button>
+			                <div id="Interiorads" class="collapse">
+                          <br>
+                          <button data-toggle="collapse" data-target="#Interiornewreq">Add New</button>
+                          <button>See All</button>
+                          <!-- Add Information Output Here-->
+                          <br>
+                          <form action = "">
+                            <div id="Interiornewreq" class="collapse">
+                              <label for="InteriorreqName">Request Description:</label>
+                              <input type="InteriorDescription" class="form-control" id="InteriorDescription">
+                              <label for="#state">State:</label>
+                              <select name="state" id="state">
+                                <option value="idaho">ID</option>
+                              </select>
+                              <label for="#city">City</label>
+                              <select name="city" id="city">
+                                <option value="moscow">Moscow</option>
+                                <option value="boise">Boise</option>
+                              </select>
+                              <label for="#property">Property</label>
+                              <select name="property" id="property">
+                                <option value="">Address</option>
+                              </select>
+                              <br>
+                              <button>Create New</button>
+                            </div>
+                          </form>
+			              </div> 
+              </div></h3>
+            </div>
+            <div class="col-sm-4"><h3>
+              <div class="card">
+              <div class="card-body">
+                      <h3 class="card-title">Internet</h3>
+                      <h4 class="card-text">Internet Information and Requests</h4>
+                      <button data-toggle="collapse" data-target="#Internetads">Open Section</button>
+			                <div id="Internetads" class="collapse">
+                          <br>
+                          <button data-toggle="collapse" data-target="#Internetnewreq">Add New</button>
+                          <button>See All</button>
+                          <!-- Add Information Output Here-->
+                          <br>
+                          <form action = "">
+                            <div id="Internetnewreq" class="collapse">
+                              <label for="InternetreqName">Request Description:</label>
+                              <input type="InternetDescription" class="form-control" id="InternetDescription">
+                              <label for="#state">State:</label>
+                              <select name="state" id="state">
+                                <option value="idaho">ID</option>
+                              </select>
+                              <label for="#city">City</label>
+                              <select name="city" id="city">
+                                <option value="moscow">Moscow</option>
+                                <option value="boise">Boise</option>
+                              </select>
+                              <label for="#property">Property</label>
+                              <select name="property" id="property">
+                                <option value="">Address</option>
+                              </select>
+                              <br>
+                              <button>Create New</button>
+                            </div>
+                          </form>
+			              </div> 
+              </div></h3>
+            </div>
           </div>
       <h3>Other Account Stuff</h3>
     </div>
@@ -126,18 +220,16 @@
     </div>
   </div>
 </div>
-
-</body>
 <!--Footer-->
-<body class="d-flex flex-column vh-100">
- <div class="container overflow-auto">
+<div class="container-fluid">
+ <div class="row">
+    <footer class = "col-sm-12 text-center">
+        <p>&copy; Copyright 2024, Hassan's Corporation</p>
+    </footer>
   </div>
-  <footer class="bg-black text-white mt-auto">
-      <div class="container text-center">
-          <p><p>&copy; Copyright 2024, Hassan's Corporation</p></p>
-      </div>
-  </footer>
+</div>
 </body>
+
 </html>
 
 
