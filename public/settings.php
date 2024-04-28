@@ -75,10 +75,12 @@
 
          </div>
 		</li>
+		
 		<li class="list-group-item">
+		
 			<button data-toggle="collapse" data-target="#remo">Change Phone #</button>
 			<div id="remo" class="collapse">
-         	<form action="/action_page.php">
+         	<form action="HOS.php">
 	      		<div class="form-group">
 			      	<label for="email">Old Phone #: </label>
 				         <input type="text" class="form-control" id="email">
@@ -98,7 +100,7 @@
 		<li class="list-group-item">
 			<button data-toggle="collapse" data-target="#change">Change Password</button>
 			<div id="change" class="collapse">
-         	<form action="/action_page.php">
+         	<form action="HOS.php">
 	      		<div class="form-group">
 			      	<label for="email">Old Password:</label>
 				         <input type="email" class="form-control" id="email">
@@ -118,7 +120,7 @@
 		<li class="list-group-item">
 			<button data-toggle="collapse" data-target="#delete">Delete Account</button>
 			<div id="delete" class="collapse">
-         	<form action="/action_page.php">
+         	<form action="HOS.php">
 	      		<div class="form-group">
 			      	<label for="email">Password:</label>
 				         <input type="password" class="form-control" id="pwd">
