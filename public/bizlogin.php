@@ -61,7 +61,7 @@
     <div class="col-sm-8 text-center">
 	   <img src="../style/iCareLogo.png" class="img-fluid" alt = "Logo">
 		<h1>Your Personal Property Manager</h1>
-       	<form action="bizlogin.php" method="POST">
+       	<form action="verify.php" method="POST">
 
          <div class="btn-group">
                <a href="login.php" class="btn btn-default" role="button">Home Owner</a>

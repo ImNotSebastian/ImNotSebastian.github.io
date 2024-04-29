@@ -195,20 +195,20 @@
 		</li>
 	  </ul> 
     </div>
-    <div class="col-sm-2 sidenav">
+   <div class="col-sm-2 sidenav">
 		<a href ="bizdash.php">
 			<h2>Dashboard</h2>
 		</a>
 		<a href ="businesses.php">
-			<button type="button" class="btn btn-success btn-block">Businesses</button>
+			<button type="button" class="btn btn-success btn-block">Products</button>
 		</a>
       <hr>
 		<a href ="analytics.php">
-			<button type="button" class="btn btn-success btn-block">Analytics</button>
+			<button type="button" class="btn btn-success btn-block">Clients</button>
 		</a>
       <hr>
 	  <a href ="ads.php">
-        <button type="button" class="btn btn-success btn-block">Manage Ads</button>
+        <button type="button" class="btn btn-success btn-block">Promote</button>
 	  </a>
       <hr>
 	   <a href ="bizsettings.php">

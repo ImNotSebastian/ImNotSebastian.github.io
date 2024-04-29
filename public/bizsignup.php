@@ -22,9 +22,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // add more fields as needed
 
     // Construct the SQL query for BusinessOwners table
-    $sql = "INSERT INTO BusinessOwners (Name, PhoneNum, UserName, Password) VALUES ('$Name', ";
-    $sql .= $PhoneNum ? "'$PhoneNum'" : "NULL"; // Use NULL if PhoneNum is empty
-    $sql .= ", '$UserName', '$Password')";
+    $sql = "INSERT INTO BusinessOwners (Name, PhoneNum, UserName, Password) VALUES ('$Name', $PhoneNum, '$UserName', '$Password');";
+  //  $sql .= $PhoneNum ? "'$PhoneNum'" : "NULL"; // Use NULL if PhoneNum is empty
+   // $sql .= ", '$UserName', '$Password')";
+    
 
     if ($conn->query($sql) === TRUE) {
         echo "New record created successfully";
@@ -105,7 +106,7 @@ $conn->close();
                <a href="bizsignup.php" class="btn btn-primary" role="button">Business</a>
          </div>
 		
-		<form action="signup.php" method="POST">
+		<form action="bizsignup.php" method="POST">
     <div class="form-group">
         <label for="name">Name:</label>
         <input type="text" class="form-control" id="name" name="name">

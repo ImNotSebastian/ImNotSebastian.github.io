@@ -26,17 +26,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["email"];
     $password = $_POST["pwd"];
 
-    // Check the referring page to determine the user type
-    $referrer = $_SERVER['HTTP_REFERER'];
-    $user_type = '';
+  // Check the referring page to determine the user type
+$referrer = $_SERVER['HTTP_REFERER'];
+$user_type = '';
 
-    if (strpos($referrer, 'login.php') !== false) {
-        // User is a homeowner
-        $user_type = 'Homeowners';
-    } elseif (strpos($referrer, 'bizlogin.php') !== false) {
-        // User is a business owner
-        $user_type = 'BusinessOwners';
-    }
+if (strpos($referrer, 'bizlogin.php') !== false) {
+    // User is a business owner
+    $user_type = 'BusinessOwners';
+} elseif (strpos($referrer, 'login.php') !== false) {
+    // User is a homeowner
+    $user_type = 'Homeowners';
+}
 
     if (!empty($user_type)) {
         // SQL query to check if the username and password match
@@ -72,9 +72,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         } else {
             // Invalid username or password
-            echo "Invalid username or password";
-            header("Location: login.php");
-            exit(); // Make sure to exit after redirection
+            echo "Invalid username or password " . $referrer;
+           // header("Location: login.php");
+           // exit(); // Make sure to exit after redirection
         }
     } else {
         // Invalid user type

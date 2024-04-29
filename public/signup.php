@@ -22,9 +22,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // add more fields as needed
 
       // Construct the SQL query
-    $sql = "INSERT INTO Homeowners (Name, PhoneNum, UserName, Password) VALUES ('$Name', ";
-    $sql .= $PhoneNum ? "'$PhoneNum'" : "NULL"; // Use NULL if PhoneNum is empty
-    $sql .= ", '$UserName', '$Password')";
+  $sql = "INSERT INTO Homeowners (Name, PhoneNum, UserName, Password) VALUES ('$Name', $PhoneNum, '$UserName', '$Password');";
+  //  $sql .= $PhoneNum ? "'$PhoneNum'" : "NULL"; // Use NULL if PhoneNum is empty
+   // $sql .= ", '$UserName', '$Password')";
     
     if ($conn->query($sql) === TRUE) {
         echo "New record created successfully";
