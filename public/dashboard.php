@@ -47,214 +47,172 @@
   </div>
 </nav>
  
- <!--Center Column-->
+
 <div class="container-fluid text-center">    
-  <div class="row content">
-    <div class="col-sm-2 sidenav">
-       <h2>Services</h2>
-	 	  <p><a href="contact.php"  class="text-decoration-none">Support</a></p>
-      <p><a href="TOS.php"  class="text-decoration-none">Terms of Service</a></p>
-      <p><a href="PP.php"  class="text-decoration-none">Privacy Policy</a></p>
-    </div>
+	<div class="row content">
+		<div class="col-sm-2 sidenav">
+			<h2>Services</h2>
+	   		<p><a href="contact.php"  class="text-decoration-none">Support</a></p>
+       		<p><a href="TOS.php"  class="text-decoration-none">Terms of Service</a></p>
+       		<p><a href="PP.php"  class="text-decoration-none">Privacy Policy</a></p>
+    	</div>
 
-    <div class="col-sm-8 text-center">
-	   <img src="../style/iCareLogo.png" class="img-fluid" alt = "Logo">
-      <h1>Account Overview</h1>
-      
-      <?php
-session_start(); // Start session
-
-// Check if the 'username' session variable is set
-if(isset($_SESSION["username"])) {
-    // Echo a greeting using the 'username' session variable
-    echo "<b>Hello " . $_SESSION["username"] . "</b><br>";
-} else {
-    // If 'username' session variable is not set, echo a generic greeting
-    echo "Hello Mystery User, how did You get to the dashboard w/o an account?!";
-}
-?>
-      
-      <hr>
-      <div>
-        <div>
-          <h1 class="display-3">Properties</h1>
+    	<div class="col-sm-8 text-center">
+	   		<img src="../style/iCareLogo.png" class="img-fluid" alt = "Logo">
+       		<h1>Account Overview</h1>
+       		<p class="lead">See and edit properties</p>	
           
-          <p class="lead">See and edit properties</p>		  
-          <p>Insert properties here.</p>
-          <!-- No, for realsies, insert properties here -->		  
-          <p class="lead">
+       		<!-- PHP Tag for viewing properties-->
+          
+          
+  <?php
+// Start session
+session_start();
+
+// Database configuration
+$servername = "localhost";
+$username = "root"; // database username
+$password = ""; // database password
+$dbname = "iCare"; // database name
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Check if session variable 'customer_id' is set
+if (isset($_SESSION["customer_id"])) {
+    // Get the customer ID from the session
+    $ownerID = $_SESSION["customer_id"];
+
+    // Query to select properties owned by the current user
+    $query = "SELECT * FROM Properties WHERE OwnerID = '$ownerID'";
+    $result = $conn->query($query);
+
+    // Initialize a counter variable
+    $counter = 1;
+
+    // Check if there are properties found
+    if ($result->num_rows > 0) {
+        // Output the table headers
+        echo "<div>";
+        echo "<table border='1' style='margin: 0 auto;'>";
+        echo "<tr><th>Property Number</th><th>Address</th><th>Dimensions</th><th>Insurance</th><th>Internet</th><th>Action</th></tr>";
+
+        // Output each property as a table row
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td style='background-color: white; padding: 10px;'>" . $counter . "</td>";
+            echo "<td style='background-color: white; padding: 10px;'>" . $row["Address"] . "</td>";
+            echo "<td style='background-color: white; padding: 10px;'>" . $row["Dimensions"] . "</td>";
+            echo "<td style='background-color: white; padding: 10px;'>" . $row["Insurance"] . "</td>";
+            echo "<td style='background-color: white; padding: 10px;'>" . $row["Internet"] . "</td>";
+            echo "<td style='background-color: white; padding: 10px;'><form method='post'><input type='hidden' name='delete_property_id' value='" . $row["PropertyID"] . "'><button type='submit' name='delete'>Delete</button></form></td>";
+            echo "</tr>";
+            // Increment the counter
+            $counter++;
+        }
+
+        echo "</table>";
+        echo "</div>";
+    } else {
+        echo "No properties found.";
+    }
+} else {
+    // If 'customer_id' session variable is not set, display a message
+    echo "Please log in";
+}
+
+// Handle delete property action
+if (isset($_POST['delete'])) {
+    // Get the property ID from the form
+    $property_id = $_POST['delete_property_id'];
+
+    // Query to delete the property from the database
+    $delete_query = "DELETE FROM Properties WHERE PropertyID = '$property_id'";
+    if ($conn->query($delete_query) === TRUE) {
+        // Refresh the page to reflect the changes
+        echo "<meta http-equiv='refresh' content='0'>";
+    } else {
+        echo "Error deleting property: " . $conn->error;
+    }
+}
+
+// Close the database connection
+$conn->close();
+?>
+
+
+
+			<br>
+ 
+          	<!-- No, for realsies, insert properties here -->		  
+          	<p class="lead">
           <button data-toggle="collapse" data-target="#createproperty">Create New Property</button>
           <div id="createproperty" class="collapse">
-            
-             <h3>Create New Property</h3>
-                <?php
-                session_start(); // Start session
+          	<h3>Create New Property</h3>
+          	<?php
+session_start(); // Start session
 
-                // Database configuration
-                $servername = "localhost";
-                $username = "root"; // database username
-                $password = ""; // database password
-                $dbname = "iCare"; // database name
+// Database configuration
+$servername = "localhost";
+$username = "root"; // database username
+$password = ""; // database password
+$dbname = "iCare"; // database name
 
-                // Create connection
-                $conn = new mysqli($servername, $username, $password, $dbname);
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-                // Check connection
-                if ($conn->connect_error) {
-                    die("Connection failed: " . $conn->connect_error);
-                }
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
-                // Check if form is submitted
-                if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                    // Get property address from the form
-                    $address = $_POST["createpropertyname"];
+// Check if form is submitted and $address is not null
+if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["createpropertyname"])) {
+    // Get property address from the form
+    $address = $_POST["createpropertyname"];
 
-                    // Get the owner ID from the session
-                    if (isset($_SESSION["customer_id"])) {
-                        $ownerID = $_SESSION["customer_id"];
+    // Get the owner ID from the session
+    if (isset($_SESSION["customer_id"])) {
+        $ownerID = $_SESSION["customer_id"];
 
-                        // SQL query to insert new property into the Properties table
-                        $sql = "INSERT INTO Properties (Address, OwnerID) VALUES ('$address', '$ownerID')";
+        // SQL query to insert new property into the Properties table
+        $sql = "INSERT INTO Properties (Address, OwnerID) VALUES ('$address', '$ownerID')";
 
-                        if ($conn->query($sql) === TRUE) {
-                            // Property added successfully
-                            echo "New property added successfully";
-                        } else {
-                            // Error adding property
-                            echo "Error: " . $sql . "<br>" . $conn->error;
-                        }
-                    } else {
-                        // Redirect if owner ID is not found in session
-                        header("Location: login.php");
-                        exit(); // Make sure to exit after redirection
-                    }
-                }
-                ?>
-                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                    <label for="createpropertyname">Property Address:</label>
-                    <input type="text" class="form-control" id="createpropertyname" name="createpropertyname">
-                    <br>
-                    <button type="submit">Create</button>
-                </form>
-            
-            
-          </div>				  
-          </p>
-        </div>		
-      </div>
-      <br>
-          <div class="row">
-            <div class="col-sm-4">
-              <h3><div class="card">
-                    <div class="card-body">
-                      <h3 class="card-title">Landscaping</h3>
-                      <h4 class="card-text">Landscaping Information and Requests</h4>
-                      <button data-toggle="collapse" data-target="#Lads">Open Section</button>
-			                <div id="Lads" class="collapse">
-                          <br>
-                          <button data-toggle="collapse" data-target="#Lnewreq">Add New</button>
-                          <button>See All</button>
-                          <!-- Add Information Output Here-->
-                          <br>
-                          <form action = "">
-                            <div id="Lnewreq" class="collapse">
-                              <label for="LreqName">Request Description:</label>
-                              <input type="LDescription" class="form-control" id="LDescription">
-                              <label for="#state">State:</label>
-                              <select name="state" id="state">
-                                <option value="idaho">ID</option>
-                              </select>
-                              <label for="#city">City</label>
-                              <select name="city" id="city">
-                                <option value="moscow">Moscow</option>
-                                <option value="boise">Boise</option>
-                              </select>
-                              <label for="#property">Property</label>
-                              <select name="property" id="property">
-                                <option value="">Address</option>
-                              </select>
-                              <br>
-                              <button>Create New</button>
-                            </div>
-                          </form>
-			              </div>                    
-        		      </div>
-             	</div></h3>
-            </div>
-            <div class="col-sm-4 col-5"><h3>
-              <div class="card">
-              <div class="card-body">
-                      <h3 class="card-title">Interior</h3>
-                      <h4 class="card-text">Interior Information and Requests</h4>
-                      <button data-toggle="collapse" data-target="#Interiorads">Open Section</button>
-			                <div id="Interiorads" class="collapse">
-                          <br>
-                          <button data-toggle="collapse" data-target="#Interiornewreq">Add New</button>
-                          <button>See All</button>
-                          <!-- Add Information Output Here-->
-                          <br>
-                          <form action = "">
-                            <div id="Interiornewreq" class="collapse">
-                              <label for="InteriorreqName">Request Description:</label>
-                              <input type="InteriorDescription" class="form-control" id="InteriorDescription">
-                              <label for="#state">State:</label>
-                              <select name="state" id="state">
-                                <option value="idaho">ID</option>
-                              </select>
-                              <label for="#city">City</label>
-                              <select name="city" id="city">
-                                <option value="moscow">Moscow</option>
-                                <option value="boise">Boise</option>
-                              </select>
-                              <label for="#property">Property</label>
-                              <select name="property" id="property">
-                                <option value="">Address</option>
-                              </select>
-                              <br>
-                              <button>Create New</button>
-                            </div>
-                          </form>
-			              </div> 
-              </div></h3>
-            </div>
-            <div class="col-sm-4"><h3>
-              <div class="card">
-              <div class="card-body">
-                      <h3 class="card-title">Internet</h3>
-                      <h4 class="card-text">Internet Information and Requests</h4>
-                      <button data-toggle="collapse" data-target="#Internetads">Open Section</button>
-			                <div id="Internetads" class="collapse">
-                          <br>
-                          <button data-toggle="collapse" data-target="#Internetnewreq">Add New</button>
-                          <button>See All</button>
-                          <!-- Add Information Output Here-->
-                          <br>
-                          <form action = "">
-                            <div id="Internetnewreq" class="collapse">
-                              <label for="InternetreqName">Request Description:</label>
-                              <input type="InternetDescription" class="form-control" id="InternetDescription">
-                              <label for="#state">State:</label>
-                              <select name="state" id="state">
-                                <option value="idaho">ID</option>
-                              </select>
-                              <label for="#city">City</label>
-                              <select name="city" id="city">
-                                <option value="moscow">Moscow</option>
-                                <option value="boise">Boise</option>
-                              </select>
-                              <label for="#property">Property</label>
-                              <select name="property" id="property">
-                                <option value="">Address</option>
-                              </select>
-                              <br>
-                              <button>Create New</button>
-                            </div>
-                          </form>
-			              </div> 
-              </div></h3>
-            </div>
-          </div>
+        if ($conn->query($sql) === TRUE) {
+            // Property added successfully
+             // Refresh the page to reflect the changes
+       		 echo "<meta http-equiv='refresh' content='0'>";
+        } else {
+            // Error adding property
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+    } else {
+        // Redirect if owner ID is not found in session
+        header("Location: login.php");
+        exit(); // Make sure to exit after redirection
+    }
+}
+?>
+                
+          	<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+          		<label for="createpropertyname">Property Address:</label>
+            	<input type="text" class="form-control" id="createpropertyname" name="createpropertyname">
+            	<br>
+            	<button type="submit">Create</button>
+          	</form>
+      	</div>
+      	<br>      
+          
+          
+          
       <h3>Other Account Stuff</h3>
+      
+      
     </div>
     <div class="col-sm-2 sidenav">
 		<a href ="dashboard.php">
@@ -282,6 +240,13 @@ if(isset($_SESSION["username"])) {
     </div>
   </div>
 </div>
+
+<div class="container-fluid text-center">    
+	<div class="row content">
+		<!--Show Active Services-->
+	</div>
+</div>
+
 <!--Footer-->
 <div class="container-fluid">
  <div class="row">
