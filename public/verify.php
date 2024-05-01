@@ -58,7 +58,7 @@ if (strpos($referrer, 'bizlogin.php') !== false) {
                 $_SESSION["username"] = $row["UserName"];
                 $_SESSION["fullname"] = $row["Name"];
                 $_SESSION["phone"] = $row["PhoneNum"];
-                $_SESSION["property_id"] = $row["PropertyID"];
+                $_SESSION["biz_id"] = $row["OwnerID"];
                 // Add more session variables for other columns as needed
             }
 

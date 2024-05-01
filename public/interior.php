@@ -63,22 +63,99 @@
       <b>iCare is a groundbreaking home service that empowers homeowners to effortlessly manage their essential home services in a whole new way. With iCare, homeowners can create personalized home profiles encompassing every aspect of their living space, from mortgages and insurance to lawn care, internet, and more.</b>
       <hr>
 
+<?php
+// Start session
+session_start();
 
-<form action="submit_interior.php" method="POST" enctype="multipart/form-data">
-  <label for="floor_plan">Upload Floor Plan:</label><br>
-  <input type="file" id="floor_plan" name="floor_plan" accept=".pdf,.jpg,.jpeg,.png" required><br><br>
+// Database configuration
+$servername = "localhost";
+$username = "root"; // database username
+$password = ""; // database password
+$dbname = "iCare"; // database name
 
-  <label for="num_bedrooms">Number of Bedrooms:</label><br>
-  <input type="number" id="num_bedrooms" name="num_bedrooms" min="0" required><br><br>
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-         <label for="num_bathrooms">Number of Bathrooms:</label><br>
-         <input type="number" id="num_bathrooms" name="num_bathrooms" min="0" required><br><br>
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
-         <label for="floor_space">Floor Space (in square meters):</label><br>
-         <input type="number" id="floor_space" name="floor_space" min="0" step="any" required><br><br>
+// Check if session variable 'customer_id' is set
+if (isset($_SESSION["customer_id"])) {
+    // Get the customer ID from the session
+    $ownerID = $_SESSION["customer_id"];
 
-         <input type="submit" value="Submit">
-      </form>
+    // Query to select properties owned by the current user
+    $query = "SELECT * FROM Properties WHERE OwnerID = '$ownerID'";
+    $result = $conn->query($query);
+
+    // Check if there are properties found
+    if ($result->num_rows > 0) {
+        // Output the table headers
+        echo "<div>";
+        echo "<form method='post'>";
+        echo "<table border='1' style='margin: 0 auto; width: 100%'>";
+        echo "<tr><th>Property Number</th><th>Address</th><th>Zipcode</th><th>Bed Count</th><th>Bathroom Count</th><th>Floor Size</th><th>Floor Plans</th><th>Action</th></tr>";
+
+        // Output each property as a table row
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $row["PropertyID"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $row["Address"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $row["Zipcode"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'><input type='number' name='bedcount[" . $row["PropertyID"] . "]' value='" . $row["BedCount"] . "' style='width: 60px'></td>";
+            echo "<td style='background-color: white; padding: 6px;'><input type='number' name='bathroomcount[" . $row["PropertyID"] . "]' value='" . $row["BathroomCount"] . "' style='width: 60px'></td>";
+            echo "<td style='background-color: white; padding: 6px;'><input type='number' name='floorsize[" . $row["PropertyID"] . "]' value='" . $row["FloorSize"] . "' style='width: 60px'></td>";
+            echo "<td style='background-color: white; padding: 6px;'><input type='file' name='floorplans[" . $row["PropertyID"] . "]'></td>";
+            echo "<td style='background-color: white; padding: 6px;'><button type='submit' name='update' value='" . $row["PropertyID"] . "'>Update</button></td>";
+            echo "</tr>";
+        }
+
+        echo "</table>";
+        echo "</form>";
+        echo "</div>";
+    } else {
+        echo "No properties found.";
+    }
+} else {
+    // If 'customer_id' session variable is not set, display a message
+    echo "Please log in";
+}
+
+// Handle property update action
+if (isset($_POST['update'])) {
+    $propertyID = $_POST['update'];
+    $bedcount = $_POST['bedcount'][$propertyID];
+    $bathroomcount = $_POST['bathroomcount'][$propertyID];
+    $floorsize = $_POST['floorsize'][$propertyID];
+    
+    // Handle floor plans upload
+    if(isset($_FILES['floorplans']['name'][$propertyID])) {
+        $floorplans_tmp_name = $_FILES['floorplans']['tmp_name'][$propertyID];
+        $floorplans_data = file_get_contents($floorplans_tmp_name);
+        $floorplans_data = $conn->real_escape_string($floorplans_data);
+        $update_query = "UPDATE Properties SET FloorPlans = '$floorplans_data' WHERE PropertyID = '$propertyID'";
+        if ($conn->query($update_query) !== TRUE) {
+            echo "Error updating floor plans: " . $conn->error;
+        }
+    }
+
+    // Update the property in the database
+    $update_query = "UPDATE Properties SET BedCount = '$bedcount', BathroomCount = '$bathroomcount', FloorSize = '$floorsize' WHERE PropertyID = '$propertyID'";
+    if ($conn->query($update_query) === TRUE) {
+        // Refresh the page to reflect the changes
+        echo "<meta http-equiv='refresh' content='0'>";
+    } else {
+        echo "Error updating property: " . $conn->error;
+    }
+}
+
+// Close the database connection
+$conn->close();
+?>
+
+
 
     </div>
     <div class="col-sm-2 sidenav">
@@ -108,17 +185,25 @@
   </div>
 </div>
 
-
-
-<div class="container-fluid">
- <div class="row">
-	<footer class = "col-sm-12 text-center">
-		<p>&copy; Copyright 2024, Hassan's Corporation</p>
-	</footer>
-  </div>
-</div>
-
 </body>
+
+
+<!--Footer-->
+<body class="d-flex flex-column vh-100">
+ <div class="container overflow-auto">
+  </div>
+  <footer class="bg-black text-white mt-auto">
+      <div class="container text-center">
+          <p><p>&copy; Copyright 2024, Hassan's Corporation</p></p>
+      </div>
+  </footer>
+</body>
+</html>
+
+<!--Comment-->
+
+
+
 </html>
 
 

@@ -63,14 +63,83 @@
       <h1>Internet</h1>
       <hr>
       <p>iCare needs some information about your internet needs for your request. Please enter your Mbs and device count below after going through the embedded web tool.</p>
-      <form>
-        <label for="mbs">Mbs:</label>
-        <input type="Mbs" class="form-control" id="mbs">
-        <label for="devicenum">Device Count:</label>
-        <input type="DeviceNum" class="form-control" id="devicenum">
-        <br>
-        <button id="confirmbutton" name="confirmbutton" class="btn btn-primary">Confirm</button>
-      </form>
+      <?php
+// Start session
+session_start();
+
+// Database configuration
+$servername = "localhost";
+$username = "root"; // database username
+$password = ""; // database password
+$dbname = "iCare"; // database name
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Check if session variable 'customer_id' is set
+if (isset($_SESSION["customer_id"])) {
+    // Get the customer ID from the session
+    $ownerID = $_SESSION["customer_id"];
+
+    // Query to select properties owned by the current user
+    $query = "SELECT * FROM Properties WHERE OwnerID = '$ownerID'";
+    $result = $conn->query($query);
+
+    // Check if there are properties found
+    if ($result->num_rows > 0) {
+        // Output the table headers
+        echo "<div>";
+        echo "<form method='post'>";
+        echo "<table border='1' style='margin: 0 auto; width: 100%'>";
+        echo "<tr><th>Property Number</th><th>Address</th><th>Zipcode</th><th>Mbps</th><th>Device Count</th><th>Action</th></tr>";
+
+        // Output each property as a table row
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $row["PropertyID"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $row["Address"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $row["Zipcode"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'><input type='text' name='mbps[" . $row["PropertyID"] . "]' value='" . $row["Mbps"] . "'></td>";
+            echo "<td style='background-color: white; padding: 6px;'><input type='text' name='devicecount[" . $row["PropertyID"] . "]' value='" . $row["DeviceCount"] . "'></td>";
+            echo "<td style='background-color: white; padding: 6px;'><button type='submit' name='update' value='" . $row["PropertyID"] . "'>Update</button></td>";
+            echo "</tr>";
+        }
+
+        echo "</table>";
+        echo "</form>";
+        echo "</div>";
+    } else {
+        echo "No properties found.";
+    }
+} else {
+    // If 'customer_id' session variable is not set, display a message
+    echo "Please log in";
+}
+
+// Handle property update action
+if (isset($_POST['update'])) {
+    $propertyID = $_POST['update'];
+    $mbps = $_POST['mbps'][$propertyID];
+    $devicecount = $_POST['devicecount'][$propertyID];
+
+    // Update the property in the database
+    $update_query = "UPDATE Properties SET Mbps = '$mbps', DeviceCount = '$devicecount' WHERE PropertyID = '$propertyID'";
+    if ($conn->query($update_query) === TRUE) {
+        // Refresh the page to reflect the changes
+        echo "<meta http-equiv='refresh' content='0'>";
+    } else {
+        echo "Error updating property: " . $conn->error;
+    }
+}
+
+// Close the database connection
+$conn->close();
+?>
       <br>
       <embed src="https://broadbandnow.com/bandwidth-calculator" style="width:100%; height: 550px;">
       <h3>Other Account Stuff</h3>

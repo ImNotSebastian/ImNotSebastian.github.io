@@ -62,23 +62,150 @@
 	   <img src="../style/iCareLogo.png" class="img-fluid" alt = "Logo">
       <h1>Account Overview</h1>
       
-        <?php
-session_start(); // Start session
+<?php
+// Start session
+session_start();
 
-// Check if the 'username' session variable is set
-if(isset($_SESSION["username"])) {
-    // Echo a greeting using the 'username' session variable
-    echo "<b>Hello " . $_SESSION["username"] . "</b><br>";
-} else {
-    // If 'username' session variable is not set, echo a generic greeting
-    echo "Hello Mystery User, how did You get to the dashboard w/o an account?!";
+// Database configuration
+$servername = "localhost";
+$username = "root"; // database username
+$password = ""; // database password
+$dbname = "iCare"; // database name
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
+
+// Check if session variable 'biz_id' is set
+if (isset($_SESSION["biz_id"])) {
+    // Get the business ID from the session
+    $bizID = $_SESSION["biz_id"];
+
+    // Query to select services where BusinessID matches the session's biz_id
+    $query = "SELECT Name, BusinessID, Description, Price, Availability FROM Services WHERE BusinessID = '$bizID'";
+    $result = $conn->query($query);
+
+    // Initialize a counter variable
+    $counter = 1;
+
+    // Check if there are services found
+    if ($result->num_rows > 0) {
+        // Output the table headers
+        echo "<div>";
+        echo "<table border='1' style='margin: 0 auto; width: 100%'>";
+        echo "<tr><th>Name</th><th>BusinessID</th><th>Description</th><th>Price</th><th>Availability</th></tr>";
+
+        // Output each service as a table row
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $row["Name"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $row["BusinessID"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $row["Description"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $row["Price"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $row["Availability"] . "</td>";
+            echo "</tr>";
+            // Increment the counter
+            $counter++;
+        }
+
+        echo "</table>";
+        echo "</div>";
+    } else {
+        echo "No services found.";
+    }
+} else {
+    // If 'biz_id' session variable is not set, display a message
+    echo "Please log in";
+}
+
+// Close the database connection
+$conn->close();
 ?>
 
-      <hr>
-      <h3>Other Account Stuff</h3>
-      <p>Now you shall suffer...</p>
+
+<p class="lead">
+    <button data-toggle="collapse" data-target="#createservice">Create New Service</button>
+    <div id="createservice" class="collapse">
+        <h3>Create New Service</h3>
+        <?php
+        session_start(); // Start session
+
+        // Database configuration
+        $servername = "localhost";
+        $username = "root"; // database username
+        $password = ""; // database password
+        $dbname = "iCare"; // database name
+
+        // Create connection
+        $conn = new mysqli($servername, $username, $password, $dbname);
+
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        // Check if form is submitted and all required fields are not empty
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["name"]) && !empty($_POST["price"]) && !empty($_POST["description"]) && !empty($_POST["availability"])) {
+            // Get form data
+            $name = $_POST["name"];
+            $price = $_POST["price"];
+            $description = $_POST["description"];
+            $availability = $_POST["availability"];
+
+            // Get the business ID from the session
+            if (isset($_SESSION["biz_id"])) {
+                $bizID = $_SESSION["biz_id"];
+
+                // SQL query to insert new service into the Services table
+                $sql = "INSERT INTO Services (Name, Price, Description, Availability, BusinessID) VALUES ('$name', '$price', '$description', '$availability', '$bizID')";
+
+                if ($conn->query($sql) === TRUE) {
+                    // Service added successfully
+                    // Refresh the page to reflect the changes
+                    echo "<meta http-equiv='refresh' content='0'>";
+                } else {
+                    // Error adding service
+                    echo "Error: " . $sql . "<br>" . $conn->error;
+                }
+            } else {
+                // Redirect if business ID is not found in session
+                header("Location: login.php");
+                exit(); // Make sure to exit after redirection
+            }
+        }
+        ?>
+
+        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+            <label for="name">Service Name:</label>
+            <input type="text" class="form-control" id="name" name="name">
+            <br>
+            <label for="price">Price:</label>
+            <input type="text" class="form-control" id="price" name="price">
+            <br>
+            <label for="description">Description:</label>
+            <input type="text" class="form-control" id="description" name="description">
+            <br>
+            <label for="availability">Availability:</label>
+            <input type="text" class="form-control" id="availability" name="availability">
+            <br>
+            <button type="submit">Create</button>
+        </form>
     </div>
+    <br>
+</p>
+
+
+
+
+      <hr>
+    </div>
+    
+    
+    
     <div class="col-sm-2 sidenav">
 		<a href ="bizdash.php">
 			<h2>Dashboard</h2>

@@ -65,7 +65,7 @@
        		<!-- PHP Tag for viewing properties-->
           
           
-  <?php
+<?php
 // Start session
 session_start();
 
@@ -99,18 +99,26 @@ if (isset($_SESSION["customer_id"])) {
     if ($result->num_rows > 0) {
         // Output the table headers
         echo "<div>";
-        echo "<table border='1' style='margin: 0 auto;'>";
-        echo "<tr><th>Property Number</th><th>Address</th><th>Dimensions</th><th>Insurance</th><th>Internet</th><th>Action</th></tr>";
+        echo "<table border='1' style='margin: 0 auto; width: 100%'>";
+        echo "<tr><th>Property Number</th><th>Address</th><th>Zipcode</th><th>Bed Count</th><th>Bathroom Count</th><th>Floor Size</th><th>Yard Size</th><th>Tree Count</th><th>Mbps</th><th>Device Count</th><th>Floor Plan</th><th>Insurance</th><th>Internet</th><th>Action</th></tr>";
 
         // Output each property as a table row
         while ($row = $result->fetch_assoc()) {
             echo "<tr>";
-            echo "<td style='background-color: white; padding: 10px;'>" . $counter . "</td>";
-            echo "<td style='background-color: white; padding: 10px;'>" . $row["Address"] . "</td>";
-            echo "<td style='background-color: white; padding: 10px;'>" . $row["Dimensions"] . "</td>";
-            echo "<td style='background-color: white; padding: 10px;'>" . $row["Insurance"] . "</td>";
-            echo "<td style='background-color: white; padding: 10px;'>" . $row["Internet"] . "</td>";
-            echo "<td style='background-color: white; padding: 10px;'><form method='post'><input type='hidden' name='delete_property_id' value='" . $row["PropertyID"] . "'><button type='submit' name='delete'>Delete</button></form></td>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $counter . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $row["Address"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $row["Zipcode"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $row["BedCount"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $row["BathroomCount"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $row["FloorSize"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $row["YardSize"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $row["TreeCount"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $row["Mbps"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $row["DeviceCount"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $row["FloorPlan"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $row["Insurance"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $row["Internet"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'><form method='post'><input type='hidden' name='delete_property_id' value='" . $row["PropertyID"] . "'><button type='submit' name='delete'>Delete</button></form></td>";
             echo "</tr>";
             // Increment the counter
             $counter++;
@@ -150,67 +158,70 @@ $conn->close();
 			<br>
  
           	<!-- No, for realsies, insert properties here -->		  
-          	<p class="lead">
-          <button data-toggle="collapse" data-target="#createproperty">Create New Property</button>
-          <div id="createproperty" class="collapse">
-          	<h3>Create New Property</h3>
-          	<?php
-session_start(); // Start session
+<p class="lead">
+    <button data-toggle="collapse" data-target="#createproperty">Create New Property</button>
+    <div id="createproperty" class="collapse">
+        <h3>Create New Property</h3>
+        <?php
+        session_start(); // Start session
 
-// Database configuration
-$servername = "localhost";
-$username = "root"; // database username
-$password = ""; // database password
-$dbname = "iCare"; // database name
+        // Database configuration
+        $servername = "localhost";
+        $username = "root"; // database username
+        $password = ""; // database password
+        $dbname = "iCare"; // database name
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+        // Create connection
+        $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Check if form is submitted and $address is not null
-if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["createpropertyname"])) {
-    // Get property address from the form
-    $address = $_POST["createpropertyname"];
-
-    // Get the owner ID from the session
-    if (isset($_SESSION["customer_id"])) {
-        $ownerID = $_SESSION["customer_id"];
-
-        // SQL query to insert new property into the Properties table
-        $sql = "INSERT INTO Properties (Address, OwnerID) VALUES ('$address', '$ownerID')";
-
-        if ($conn->query($sql) === TRUE) {
-            // Property added successfully
-             // Refresh the page to reflect the changes
-       		 echo "<meta http-equiv='refresh' content='0'>";
-        } else {
-            // Error adding property
-            echo "Error: " . $sql . "<br>" . $conn->error;
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
         }
-    } else {
-        // Redirect if owner ID is not found in session
-        header("Location: login.php");
-        exit(); // Make sure to exit after redirection
-    }
-}
-?>
-                
-          	<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-          		<label for="createpropertyname">Property Address:</label>
-            	<input type="text" class="form-control" id="createpropertyname" name="createpropertyname">
-            	<br>
-            	<button type="submit">Create</button>
-          	</form>
-      	</div>
-      	<br>      
+
+        // Check if form is submitted and $address is not null
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["createpropertyname"]) && !empty($_POST["zipcode"])) {
+            // Get property address and zipcode from the form
+            $address = $_POST["createpropertyname"];
+            $zipcode = $_POST["zipcode"];
+
+            // Get the owner ID from the session
+            if (isset($_SESSION["customer_id"])) {
+                $ownerID = $_SESSION["customer_id"];
+
+                // SQL query to insert new property into the Properties table
+                $sql = "INSERT INTO Properties (Address, Zipcode, OwnerID) VALUES ('$address', '$zipcode', '$ownerID')";
+
+                if ($conn->query($sql) === TRUE) {
+                    // Property added successfully
+                    // Refresh the page to reflect the changes
+                    echo "<meta http-equiv='refresh' content='0'>";
+                } else {
+                    // Error adding property
+                    echo "Error: " . $sql . "<br>" . $conn->error;
+                }
+            } else {
+                // Redirect if owner ID is not found in session
+                header("Location: login.php");
+                exit(); // Make sure to exit after redirection
+            }
+        }
+        ?>
+
+        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+            <label for="createpropertyname">Property Address:</label>
+            <input type="text" class="form-control" id="createpropertyname" name="createpropertyname">
+            <br>
+            <label for="zipcode">Zipcode:</label>
+            <input type="text" class="form-control" id="zipcode" name="zipcode">
+            <br>
+            <button type="submit">Create</button>
+        </form>
+    </div>
+    <br>
+</p>      
           
-          
-          
-      <h3>Other Account Stuff</h3>
+      <h3>Suggested Services</h3>
       
       
     </div>
