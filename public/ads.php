@@ -60,9 +60,76 @@
 
     <div class="col-sm-8 text-center">
 	   <img src="../style/iCareLogo.png" class="img-fluid" alt = "Logo">
-      <h1>Account Overview</h1>
-      <b>iCare is a groundbreaking home service that empowers homeowners to effortlessly manage their essential home services in a whole new way. With iCare, homeowners can create personalized home profiles encompassing every aspect of their living space, from mortgages and insurance to lawn care, internet, and more.</b>
-      <hr>
+      <h1>Promote your Products</h1>
+
+<?php
+// Start session
+session_start();
+
+// Database configuration
+$servername = "localhost";
+$username = "root"; // database username
+$password = ""; // database password
+$dbname = "iCare"; // database name
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Check if session variable 'biz_id' is set
+if (isset($_SESSION["biz_id"])) {
+    // Get the business ID from the session
+    $bizID = $_SESSION["biz_id"];
+
+    // Query to select services where BusinessID matches the session's biz_id
+    $query = "SELECT Name, BusinessID, Description, Price, Availability FROM Services WHERE BusinessID = '$bizID'";
+    $result = $conn->query($query);
+
+    // Initialize a counter variable
+    $counter = 1;
+
+    // Check if there are services found
+    if ($result->num_rows > 0) {
+        // Output the table headers
+        echo "<div>";
+        echo "<table border='1' style='margin: 0 auto; width: 100%'>";
+        echo "<tr><th>Name</th><th>BusinessID</th><th>Description</th><th>Price</th><th>Availability</th></tr>";
+
+        // Output each service as a table row
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $row["Name"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $row["BusinessID"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $row["Description"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $row["Price"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $row["Availability"] . "</td>";
+            echo "</tr>";
+            // Increment the counter
+            $counter++;
+        }
+
+        echo "</table>";
+        echo "</div>";
+    } else {
+        echo "No services found.";
+    }
+} else {
+    // If 'biz_id' session variable is not set, display a message
+    echo "Please log in";
+}
+
+// Close the database connection
+$conn->close();
+?>
+
+
+      <br>
+      
+      
       <h3>Other Account Stuff</h3>
       <p>Now you shall suffer...</p>
     </div>

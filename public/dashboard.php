@@ -100,7 +100,7 @@ if (isset($_SESSION["customer_id"])) {
         // Output the table headers
         echo "<div>";
         echo "<table border='1' style='margin: 0 auto; width: 100%'>";
-        echo "<tr><th>Property Number</th><th>Address</th><th>Zipcode</th><th>Bed Count</th><th>Bathroom Count</th><th>Floor Size</th><th>Yard Size</th><th>Tree Count</th><th>Mbps</th><th>Device Count</th><th>Floor Plan</th><th>Insurance</th><th>Internet</th><th>Action</th></tr>";
+        echo "<tr><th>Property Number</th><th>Address</th><th>Zipcode</th><th>Bed Count</th><th>Bathroom Count</th><th>Floor Size</th><th>Yard Size</th><th>Tree Count</th><th>Mbps</th><th>Device Count</th><th>Floor Plan</th><th>_X</th></tr>";
 
         // Output each property as a table row
         while ($row = $result->fetch_assoc()) {
@@ -116,8 +116,6 @@ if (isset($_SESSION["customer_id"])) {
             echo "<td style='background-color: white; padding: 6px;'>" . $row["Mbps"] . "</td>";
             echo "<td style='background-color: white; padding: 6px;'>" . $row["DeviceCount"] . "</td>";
             echo "<td style='background-color: white; padding: 6px;'>" . $row["FloorPlan"] . "</td>";
-            echo "<td style='background-color: white; padding: 6px;'>" . $row["Insurance"] . "</td>";
-            echo "<td style='background-color: white; padding: 6px;'>" . $row["Internet"] . "</td>";
             echo "<td style='background-color: white; padding: 6px;'><form method='post'><input type='hidden' name='delete_property_id' value='" . $row["PropertyID"] . "'><button type='submit' name='delete'>Delete</button></form></td>";
             echo "</tr>";
             // Increment the counter
@@ -223,6 +221,115 @@ $conn->close();
           
       <h3>Suggested Services</h3>
       
+    
+<?php
+// Start session
+session_start();
+
+// Database configuration
+$servername = "localhost";
+$username = "root"; // database username
+$password = ""; // database password
+$dbname = "iCare"; // database name
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Check if option is selected
+$option = isset($_GET['option']) ? $_GET['option'] : '';
+
+// Default query to select all services
+$query = "SELECT * FROM Services";
+
+// Query based on the selected option
+if ($option == 'distance') {
+    // Query to select services sorted by matching zipcode first
+    $query = "SELECT * FROM Services WHERE zipcode IN (SELECT DISTINCT Zipcode FROM Properties WHERE OwnerID = '$ownerID')";
+} elseif ($option == 'price') {
+    // Query to select services sorted by price in ascending order
+    $query = "SELECT * FROM Services ORDER BY Price ASC";
+}
+
+// Execute the query
+$result = $conn->query($query);
+
+// Check if there are services found
+if ($result->num_rows > 0) {
+    // Output the table headers
+    echo "<div>";
+    echo "<table border='1' style='margin: 0 auto; width: 100%'>";
+    echo "<tr><th>Name</th><th>Description</th><th>Price</th><th>Availability</th><th>Zipcode</th><th>Action</th><th>Additional Description</th></tr>";
+
+    // Output each service as a table row
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>";
+        echo "<td style='background-color: white; padding: 6px;'>" . $row["name"] . "</td>";
+        echo "<td style='background-color: white; padding: 6px;'>" . $row["Description"] . "</td>";
+        echo "<td style='background-color: white; padding: 6px;'>" . $row["Price"] . "</td>";
+        echo "<td style='background-color: white; padding: 6px;'>" . $row["Availability"] . "</td>";
+        echo "<td style='background-color: white; padding: 6px;'>" . $row["zipcode"] . "</td>";
+        echo "<td style='background-color: white; padding: 6px;'><form method='post'><input type='hidden' name='service_id' value='" . $row["ProductID"] . "'><button type='submit' name='request_service'>Request Service</button></form></td>";
+        echo "<td style='background-color: white; padding: 6px;'><input type='text' name='description'></td>";
+        echo "</tr>";
+    }
+
+    echo "</table>";
+    echo "</div>";
+} else {
+    echo "No services matching search requirements found.";
+}
+
+// Handle request service action
+if (isset($_POST['request_service'])) {
+    // Get the service ID from the form
+    $service_id = $_POST['service_id'];
+
+    // Get the logged-in homeowner's customer ID
+    $customer_id = isset($_SESSION['customer_id']) ? (int)$_SESSION['customer_id'] : 0;
+    
+    // Get the description from the form
+    $description = isset($_POST['description']) ? $_POST['description'] : '';
+
+    // Insert an entry into the Requests table with the additional description
+    $insertRequestSql = "INSERT INTO Requests (ProductID, CustomerID, Description) VALUES ('$service_id', '$customer_id', '$description')";
+    if ($conn->query($insertRequestSql) === TRUE) {
+        echo "Service requested successfully.";
+    } else {
+        echo "Error requesting service: " . $conn->error;
+        // You might want to handle this error condition appropriately
+    }
+}
+
+// Close the database connection
+$conn->close();
+?>
+
+<!-- Radio Buttons -->
+<div class="form-group mt-3">
+    <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+        <label>Select Option:</label><br>
+        <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="option1" name="option" class="custom-control-input" value="price" <?php if ($option == 'price') echo 'checked'; ?> onchange="this.form.submit()">
+            <label class="custom-control-label" for="option1">Price</label>
+        </div>
+    </form>
+    <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+        <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="option2" name="option" class="custom-control-input" value="distance" <?php if ($option == 'distance') echo 'checked'; ?> onchange="this.form.submit()">
+            <label class="custom-control-label" for="option2">Distance</label>
+        </div>
+    </form>
+</div>
+
+
+
+
+
       
     </div>
     <div class="col-sm-2 sidenav">
@@ -240,10 +347,6 @@ $conn->close();
 	  <a href ="interior.php">
         <button type="button" class="btn btn-success btn-block">Interior</button>
 	  </a>
-      <hr>
-	   <a href ="billing.php">
-        <button type="button" class="btn btn-success btn-block">Billing</button>
-		</a>
       <hr>
 	   <a href ="settings.php">
         <button type="button" class="btn btn-success btn-block">Settings</button>

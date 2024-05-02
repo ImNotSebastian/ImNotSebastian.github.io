@@ -61,7 +61,6 @@
     <div class="col-sm-8 text-center">
 	   <img src="../style/iCareLogo.png" class="img-fluid" alt = "Logo">
       <h1>Account Overview</h1>
-      
 <?php
 // Start session
 session_start();
@@ -86,7 +85,7 @@ if (isset($_SESSION["biz_id"])) {
     $bizID = $_SESSION["biz_id"];
 
     // Query to select services where BusinessID matches the session's biz_id
-    $query = "SELECT Name, BusinessID, Description, Price, Availability FROM Services WHERE BusinessID = '$bizID'";
+    $query = "SELECT Name, BusinessID, Description, Price, Availability, Address FROM Services WHERE BusinessID = '$bizID'";
     $result = $conn->query($query);
 
     // Initialize a counter variable
@@ -97,7 +96,7 @@ if (isset($_SESSION["biz_id"])) {
         // Output the table headers
         echo "<div>";
         echo "<table border='1' style='margin: 0 auto; width: 100%'>";
-        echo "<tr><th>Name</th><th>BusinessID</th><th>Description</th><th>Price</th><th>Availability</th></tr>";
+        echo "<tr><th>Name</th><th>BusinessID</th><th>Description</th><th>Price</th><th>Availability</th><th>Address</th></tr>";
 
         // Output each service as a table row
         while ($row = $result->fetch_assoc()) {
@@ -107,6 +106,7 @@ if (isset($_SESSION["biz_id"])) {
             echo "<td style='background-color: white; padding: 6px;'>" . $row["Description"] . "</td>";
             echo "<td style='background-color: white; padding: 6px;'>" . $row["Price"] . "</td>";
             echo "<td style='background-color: white; padding: 6px;'>" . $row["Availability"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $row["Address"] . "</td>";
             echo "</tr>";
             // Increment the counter
             $counter++;
@@ -127,78 +127,82 @@ $conn->close();
 ?>
 
 
-<p class="lead">
-    <button data-toggle="collapse" data-target="#createservice">Create New Service</button>
-    <div id="createservice" class="collapse">
-        <h3>Create New Service</h3>
-        <?php
-        session_start(); // Start session
+<br>
 
-        // Database configuration
-        $servername = "localhost";
-        $username = "root"; // database username
-        $password = ""; // database password
-        $dbname = "iCare"; // database name
+<?php
+// Start session
+session_start();
 
-        // Create connection
-        $conn = new mysqli($servername, $username, $password, $dbname);
+// Database configuration
+$servername = "localhost";
+$username = "root"; // database username
+$password = ""; // database password
+$dbname = "iCare"; // database name
 
-        // Check connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Check if session variable 'biz_id' is set
+if (isset($_SESSION["biz_id"])) {
+    // Get the business ID from the session
+    $bizID = $_SESSION["biz_id"];
+
+    // Query to select requests associated with products owned by the logged-in BusinessOwner
+    $requestsQuery = "SELECT r.*, s.Name AS ServiceName
+                      FROM Requests AS r
+                      INNER JOIN Services AS s ON r.ProductID = s.ProductID
+                      WHERE s.BusinessID = '$bizID'";
+    $requestsResult = $conn->query($requestsQuery);
+
+    // Check if there are requests found
+    if ($requestsResult->num_rows > 0) {
+        // Output the table headers for requests
+        echo "<div>";
+        echo "<h3>Clients</h3>";
+        echo "<table border='1' style='margin: 0 auto; width: 100%'>";
+        echo "<tr><th>Request ID</th><th>Product Name</th><th>Action</th></tr>";
+
+        // Output each request as a table row
+        while ($requestRow = $requestsResult->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $requestRow["RequestID"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $requestRow["ServiceName"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'><form method='post'><input type='hidden' name='request_id' value='" . $requestRow["RequestID"] . "'><button type='submit' name='resolve_request'>Resolved</button></form></td>";
+            echo "</tr>";
         }
 
-        // Check if form is submitted and all required fields are not empty
-        if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["name"]) && !empty($_POST["price"]) && !empty($_POST["description"]) && !empty($_POST["availability"])) {
-            // Get form data
-            $name = $_POST["name"];
-            $price = $_POST["price"];
-            $description = $_POST["description"];
-            $availability = $_POST["availability"];
+        echo "</table>";
+        echo "</div>";
+    } else {
+        echo "No requests found.";
+    }
+} else {
+    // If 'biz_id' session variable is not set, display a message
+    echo "Please log in";
+}
 
-            // Get the business ID from the session
-            if (isset($_SESSION["biz_id"])) {
-                $bizID = $_SESSION["biz_id"];
+// Handle resolve request action
+if (isset($_POST['resolve_request'])) {
+    // Get the request ID from the form
+    $requestID = $_POST['request_id'];
 
-                // SQL query to insert new service into the Services table
-                $sql = "INSERT INTO Services (Name, Price, Description, Availability, BusinessID) VALUES ('$name', '$price', '$description', '$availability', '$bizID')";
+    // Query to delete the request from the database
+    $deleteQuery = "DELETE FROM Requests WHERE RequestID = '$requestID'";
+    if ($conn->query($deleteQuery) === TRUE) {
+        echo "Request resolved successfully.";
+    } else {
+        echo "Error resolving request: " . $conn->error;
+    }
+}
 
-                if ($conn->query($sql) === TRUE) {
-                    // Service added successfully
-                    // Refresh the page to reflect the changes
-                    echo "<meta http-equiv='refresh' content='0'>";
-                } else {
-                    // Error adding service
-                    echo "Error: " . $sql . "<br>" . $conn->error;
-                }
-            } else {
-                // Redirect if business ID is not found in session
-                header("Location: login.php");
-                exit(); // Make sure to exit after redirection
-            }
-        }
-        ?>
-
-        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-            <label for="name">Service Name:</label>
-            <input type="text" class="form-control" id="name" name="name">
-            <br>
-            <label for="price">Price:</label>
-            <input type="text" class="form-control" id="price" name="price">
-            <br>
-            <label for="description">Description:</label>
-            <input type="text" class="form-control" id="description" name="description">
-            <br>
-            <label for="availability">Availability:</label>
-            <input type="text" class="form-control" id="availability" name="availability">
-            <br>
-            <button type="submit">Create</button>
-        </form>
-    </div>
-    <br>
-</p>
-
-
+// Close the database connection
+$conn->close();
+?>
 
 
       <hr>
@@ -217,10 +221,7 @@ $conn->close();
 		<a href ="analytics.php">
 			<button type="button" class="btn btn-success btn-block">Clients</button>
 		</a>
-      <hr>
-	  <a href ="ads.php">
-        <button type="button" class="btn btn-success btn-block">Promote</button>
-	  </a>
+
       <hr>
 	   <a href ="bizsettings.php">
         <button type="button" class="btn btn-success btn-block">Settings</button>
@@ -229,17 +230,18 @@ $conn->close();
   </div>
 </div>
 
-</body>
+
+
 <!--Footer-->
-<body class="d-flex flex-column vh-100">
- <div class="container overflow-auto">
+<div class="container-fluid">
+ <div class="row">
+    <footer class = "col-sm-12 text-center">
+        <p>&copy; Copyright 2024, Hassan's Corporation</p>
+    </footer>
   </div>
-  <footer class="bg-black text-white mt-auto">
-      <div class="container text-center">
-          <p><p>&copy; Copyright 2024, Hassan's Corporation</p></p>
-      </div>
-  </footer>
+</div>
 </body>
+
 </html>
 
 

@@ -14,21 +14,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 
-<style>
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
-    th, td,tbody {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-    }
-    th {
-        background-color: #f2f2f2;
-    }
-</style>
-
 </head>
 <body>
 
@@ -57,7 +42,7 @@
         <li><a href="signup.php">Sign Up</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right"
-         <li><a href="logout.php"><span class="glyphicon glyphicon-log-in"></span> Sign Out</a></li>
+        <li><a href="logout.php"><span class="glyphicon glyphicon-log-in"></span> Sign Out</a></li>
       </ul>
     </div>
   </div>
@@ -78,37 +63,88 @@
       <h1>Account Overview</h1>
       <b>iCare is a groundbreaking home service that empowers homeowners to effortlessly manage their essential home services in a whole new way. With iCare, homeowners can create personalized home profiles encompassing every aspect of their living space, from mortgages and insurance to lawn care, internet, and more.</b>
       <hr>
+      <h3>Services</h3>
+
+<?php
+// Start session
+session_start();
+
+// Database configuration
+$servername = "localhost";
+$username = "root"; // database username
+$password = ""; // database password
+$dbname = "iCare"; // database name
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Check if session variable 'biz_id' is set
+if (isset($_SESSION["biz_id"])) {
+    // Get the business ID from the session
+    $bizID = $_SESSION["biz_id"];
+
+    // Query to select requests associated with products owned by the logged-in BusinessOwner
+    $requestsQuery = "SELECT r.*, s.Name AS ServiceName
+                      FROM Requests AS r
+                      INNER JOIN Services AS s ON r.ProductID = s.ProductID
+                      WHERE s.BusinessID = '$bizID'";
+    $requestsResult = $conn->query($requestsQuery);
+
+    // Check if there are requests found
+    if ($requestsResult->num_rows > 0) {
+        // Output the table headers for requests
+        echo "<div>";
+        echo "<h3>Requests</h3>";
+        echo "<table border='1' style='margin: 0 auto; width: 100%'>";
+        echo "<tr><th>Request ID</th><th>Product Name</th><th>Action</th></tr>";
+
+        // Output each request as a table row
+        while ($requestRow = $requestsResult->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $requestRow["RequestID"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'>" . $requestRow["ServiceName"] . "</td>";
+            echo "<td style='background-color: white; padding: 6px;'><form method='post'><input type='hidden' name='request_id' value='" . $requestRow["RequestID"] . "'><button type='submit' name='resolve_request'>Resolved</button></form></td>";
+            echo "</tr>";
+        }
+
+        echo "</table>";
+        echo "</div>";
+    } else {
+        echo "No requests found.";
+    }
+} else {
+    // If 'biz_id' session variable is not set, display a message
+    echo "Please log in";
+}
+
+// Handle resolve request action
+if (isset($_POST['resolve_request'])) {
+    // Get the request ID from the form
+    $requestID = $_POST['request_id'];
+
+    // Query to delete the request from the database
+    $deleteQuery = "DELETE FROM Requests WHERE RequestID = '$requestID'";
+    if ($conn->query($deleteQuery) === TRUE) {
+        echo "Request resolved successfully.";
+    } else {
+        echo "Error resolving request: " . $conn->error;
+    }
+}
+
+// Close the database connection
+$conn->close();
+?>
 
 
-      <h2>View Tickets</h2>
 
-      <table>
-         <thead>
-            <tr>
-               <th>Service Requests</th>
-               <th>Description</th>
-               <th>Date Requested</th>
-               <th>Address</th>
-            </tr>
-         </thead>
-         <tbody>
-            <tr>
-               <td>Sample Request</td>
-               <td>Sample Description </td>
-               <td>04/12/2024</td>
-               <td>83843 Moscow ID</td>
-            </tr>
-            <tr>
-               <td>Sample Request 2</td>
-               <td>Sample Description 2</td>
-               <td>01/01/1970</td>
-               <td>83843 Moscow ID</td>
-            </tr>
-         <!-- Add more rows for each ticket -->
-         </tbody>
-      </table>
+
     </div>
-<div class="col-sm-2 sidenav">
+   <div class="col-sm-2 sidenav">
 		<a href ="bizdash.php">
 			<h2>Dashboard</h2>
 		</a>
@@ -119,10 +155,7 @@
 		<a href ="analytics.php">
 			<button type="button" class="btn btn-success btn-block">Clients</button>
 		</a>
-      <hr>
-	  <a href ="ads.php">
-        <button type="button" class="btn btn-success btn-block">Promote</button>
-	  </a>
+   
       <hr>
 	   <a href ="bizsettings.php">
         <button type="button" class="btn btn-success btn-block">Settings</button>
@@ -131,17 +164,18 @@
   </div>
 </div>
 
-</body>
-<!--Footer-->
-<body class="d-flex flex-column vh-100">
+
  <div class="container overflow-auto">
-  </div>
-  <footer class="bg-black text-white mt-auto">
+</div>
+  <footer class="navbar-fixed-bottom bg-black text-white mt-auto">
       <div class="container text-center">
           <p><p>&copy; Copyright 2024, Hassan's Corporation</p></p>
       </div>
   </footer>
 </body>
+
+
+
 </html>
 
 

@@ -1,3 +1,101 @@
+<?php
+session_start();
+
+// Database configuration
+$servername = "localhost";
+$username = "root"; // database username
+$password = ""; // database password
+$dbname = "iCare"; // database name
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Check if form data is set
+if (isset($_POST['new_phone'])) {
+    // Retrieve new phone number from the form
+    $newPhone = $_POST['new_phone'];
+
+    // Retrieve HomeOwner ID from session
+    $homeOwnerID = $_SESSION["homeowner_id"];
+
+    // Update the phone number in the database
+    $updatePhoneQuery = "UPDATE HomeOwners SET Phone = '$newPhone' WHERE OwnerID = '$homeOwnerID'";
+    if ($conn->query($updatePhoneQuery) === TRUE) {
+        echo "<p>Phone number changed successfully.</p>";
+    } else {
+        echo "<p>Error updating phone number: " . $conn->error . "</p>";
+    }
+}
+
+// Check if form data is set
+if (isset($_POST['current_password']) && isset($_POST['new_password']) && isset($_POST['confirm_password'])) {
+    // Retrieve current password and new password from the form
+    $currentPassword = $_POST['current_password'];
+    $newPassword = $_POST['new_password'];
+    $confirmPassword = $_POST['confirm_password'];
+
+    // Retrieve HomeOwner ID from session
+    $homeOwnerID = $_SESSION["homeowner_id"];
+
+    // Check if the new password matches the confirm password
+    if ($newPassword !== $confirmPassword) {
+        echo "<p>New password and confirm password do not match.</p>";
+    } else {
+        // Retrieve the current password from the database
+        $checkPasswordQuery = "SELECT Password FROM HomeOwners WHERE OwnerID = '$homeOwnerID'";
+        $result = $conn->query($checkPasswordQuery);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $storedPassword = $row["Password"];
+
+            // Check if the current password matches the password stored in the database
+            if ($currentPassword === $storedPassword) {
+                // Update the password in the database
+                $updatePasswordQuery = "UPDATE HomeOwners SET Password = '$newPassword' WHERE OwnerID = '$homeOwnerID'";
+                if ($conn->query($updatePasswordQuery) === TRUE) {
+                    echo "<p>Password changed successfully.</p>";
+                } else {
+                    echo "<p>Error updating password: " . $conn->error . "</p>";
+                }
+            } else {
+                echo "<p>Incorrect current password.</p>";
+            }
+        } else {
+            echo "<p>HomeOwner not found.</p>";
+        }
+    }
+}
+
+// Check if deletion confirmation is set
+if (isset($_POST['confirm_delete'])) {
+    // Retrieve HomeOwner ID from session
+    $homeOwnerID = $_SESSION["homeowner_id"];
+
+    // Delete the HomeOwner account from the database
+    $deleteQuery = "DELETE FROM HomeOwners WHERE OwnerID = '$homeOwnerID'";
+    if ($conn->query($deleteQuery) === TRUE) {
+        echo "<p>Account deleted successfully.</p>";
+        // Clear session and redirect to logout page
+        session_unset();
+        session_destroy();
+        header("Location: logout.php");
+        exit();
+    } else {
+        echo "<p>Error deleting account: " . $conn->error . "</p>";
+    }
+}
+
+// Close the database connection
+$conn->close();
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -151,10 +249,7 @@
         <button type="button" class="btn btn-success btn-block">Interior</button>
 	  </a>
       <hr>
-	   <a href ="billing.php">
-        <button type="button" class="btn btn-success btn-block">Billing</button>
-		</a>
-      <hr>
+	  
 	   <a href ="settings.php">
         <button type="button" class="btn btn-success btn-block">Settings</button>
 		</a>

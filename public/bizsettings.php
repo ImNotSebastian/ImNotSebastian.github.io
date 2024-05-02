@@ -1,3 +1,83 @@
+<?php
+session_start();
+
+// Database configuration
+$servername = "localhost";
+$username = "root"; // database username
+$password = ""; // database password
+$dbname = "iCare"; // database name
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Check if form data is set
+if (isset($_POST['current_password']) && isset($_POST['new_password']) && isset($_POST['confirm_password'])) {
+    // Retrieve current password and new password from the form
+    $currentPassword = $_POST['current_password'];
+    $newPassword = $_POST['new_password'];
+    $confirmPassword = $_POST['confirm_password'];
+
+    // Retrieve BusinessOwner ID from session
+    $bizID = $_SESSION["biz_id"];
+
+    // Check if the new password matches the confirm password
+    if ($newPassword !== $confirmPassword) {
+        echo "<p>New password and confirm password do not match.</p>";
+    } else {
+        // Retrieve the current password from the database
+        $checkPasswordQuery = "SELECT Password FROM BusinessOwners WHERE OwnerID = '$bizID'";
+        $result = $conn->query($checkPasswordQuery);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $storedPassword = $row["Password"];
+
+            // Check if the current password matches the password stored in the database
+            if ($currentPassword === $storedPassword) {
+                // Update the password in the database
+                $updatePasswordQuery = "UPDATE BusinessOwners SET Password = '$newPassword' WHERE OwnerID = '$bizID'";
+                if ($conn->query($updatePasswordQuery) === TRUE) {
+                    echo "<p>Password changed successfully.</p>";
+                } else {
+                    echo "<p>Error updating password: " . $conn->error . "</p>";
+                }
+            } else {
+                echo "<p>Incorrect current password.</p>";
+            }
+        } else {
+            echo "<p>BusinessOwner not found.</p>";
+        }
+    }
+}
+
+// Check if deletion confirmation is set
+if (isset($_POST['confirm_delete'])) {
+    // Retrieve BusinessOwner ID from session
+    $bizID = $_SESSION["biz_id"];
+
+    // Delete the BusinessOwner account from the database
+    $deleteQuery = "DELETE FROM BusinessOwners WHERE OwnerID = '$bizID'";
+    if ($conn->query($deleteQuery) === TRUE) {
+        echo "<p>Account deleted successfully.</p>";
+        // Clear session and redirect to logout page
+        session_unset();
+        session_destroy();
+        header("Location: logout.php");
+        exit();
+    } else {
+        echo "<p>Error deleting account: " . $conn->error . "</p>";
+    }
+}
+
+// Close the database connection
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,140 +140,47 @@
     <div class="col-sm-8 text-center">
 	   <img src="../style/iCareLogo.png" class="img-fluid" alt = "Logo">
 	  
-	  <ul class="list-group">
-		<li class="list-group-item">
-			<h3>Settings</h3>
-		</li>
-		<li class="list-group-item">
-			<button data-toggle="collapse" data-target="#noti">Notification Settings</button>
-			<div id="noti" class="collapse">
-         	<form action="/action_page.php">
-	      		<div class="form-group">
-			      	<label for="email">Email address:</label>
-				         <input type="email" class="form-control" id="email">
-			      </div>
-			      <div class="form-group">
-				      <label for="pwd">Password:</label>
-				         <input type="password" class="form-control" id="pwd">
-			      </div>
-			      <div class="checkbox">
-				      <label><input type="checkbox"> Remember me</label>
-			      </div>
-			      <button type="submit" class="btn btn-default">Submit</button>
-		      </form>
-         </div>
-		</li>
-    <li class="list-group-item">
-		<button data-toggle="collapse" data-target="#ads">Manage Advertisments</button>
-			<div id="ads" class="collapse">
-          <br>
-          <button data-toggle="collapse" data-target="#addnewad">Add New</button>
-          <button>See All</button>
-          <br>
-          <form action = "/action_page.php">
-            <div id="addnewad" class="collapse">
-              <label for="adName">Ad Name:</label>
-              <input type="AdName" class="form-control" id="adName">
-              <label for="#adType">Service Type:</label>
-              <select name="type" id="adType">
-                <option value="landscaping">Lawn/Landscaping</option>
-                <option value="internet">Internet</option>
-                <option value="interior">Interior</option>
-              </select>
-              <label for="#state">State:</label>
-              <select name="state" id="state">
-                <option value="idaho">ID</option>
-              </select>
-              <label for="#city">City</label>
-              <select name="city" id="city">
-                <option value="moscow">Moscow</option>
-                <option value="boise">Boise</option>
-              </select>
-              <button>Create New</button>
+	  
+	  <li class="list-group-item">
+    <button data-toggle="collapse" data-target="#change">Change Password</button>
+    <div id="change" class="collapse">
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+            <div class="form-group">
+                <label for="current_password">Current Password:</label>
+                <input type="password" class="form-control" id="current_password" name="current_password" required>
             </div>
-          </form>
-			</div>
-		</li>
-		<li class="list-group-item">
-		<button data-toggle="collapse" data-target="#add">Add Business</button>
-			<div id="add" class="collapse">
-        <form action = "/action_page.php">
-              <label for="adName">Business Name:</label>
-              <input type="AdName" class="form-control" id="adName">
-              <label for="#state">State:</label>
-              <select name="state" id="state">
-                <option value="idaho">ID</option>
-              </select>
-              <label for="#city">City:</label>
-              <select name="city" id="city">
-                <option value="moscow">Moscow</option>
-                <option value="boise">Boise</option>
-              </select>
-              <label for="#bizAddress">Business Address: </label>
-              <input type="businessAddress" class="form-control" id="bizAddress">
-              <button>Create New</button>
-              <br>
+            <div class="form-group">
+                <label for="new_password">New Password:</label>
+                <input type="password" class="form-control" id="new_password" name="new_password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Confirm New Password:</label>
+                <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
         </form>
-			</div>
-		</li>
-		<li class="list-group-item">
-			<button data-toggle="collapse" data-target="#remo">Remove Business</button>
-			<div id="remo" class="collapse">
-         	<form action="/action_page.php">
-	      		<div class="form-group">
-			      	<label for="email">Email address:</label>
-				         <input type="email" class="form-control" id="email">
-			      </div>
-			      <div class="form-group">
-				      <label for="pwd">Password:</label>
-				         <input type="password" class="form-control" id="pwd">
-			      </div>
-			      <div class="checkbox">
-				      <label><input type="checkbox"> Remember me</label>
-			      </div>
-			      <button type="submit" class="btn btn-default">Submit</button>
-		      </form>
-			</div>
-		</li>
-		<li class="list-group-item">
-			<button data-toggle="collapse" data-target="#change">Change Password</button>
-			<div id="change" class="collapse">
-         	<form action="/action_page.php">
-	      		<div class="form-group">
-			      	<label for="email">Email address:</label>
-				         <input type="email" class="form-control" id="email">
-			      </div>
-			      <div class="form-group">
-				      <label for="pwd">Password:</label>
-				         <input type="password" class="form-control" id="pwd">
-			      </div>
-			      <div class="checkbox">
-				      <label><input type="checkbox"> Remember me</label>
-			      </div>
-			      <button type="submit" class="btn btn-default">Submit</button>
-		      </form>
-			</div>
-		</li>
-		<li class="list-group-item">
-			<button data-toggle="collapse" data-target="#delete">Delete Account</button>
-			<div id="delete" class="collapse">
-         	<form action="/action_page.php">
-	      		<div class="form-group">
-			      	<label for="email">Email address:</label>
-				         <input type="email" class="form-control" id="email">
-			      </div>
-			      <div class="form-group">
-				      <label for="pwd">Password:</label>
-				         <input type="password" class="form-control" id="pwd">
-			      </div>
-			      <div class="checkbox">
-				      <label><input type="checkbox"> Remember me</label>
-			      </div>
-			      <button type="submit" class="btn btn-default">Submit</button>
-		      </form>
-			</div>
-		</li>
-	  </ul> 
+    </div>
+</li>
+<li class="list-group-item">
+    <button data-toggle="collapse" data-target="#delete">Delete Account</button>
+    <div id="delete" class="collapse">
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+            <div class="form-group">
+                <label for="email">Email address:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox"> Remember me</label>
+            </div>
+            <button type="submit" class="btn btn-default" name="confirm_delete">Submit</button>
+        </form>
+    </div>
+</li>
+
     </div>
    <div class="col-sm-2 sidenav">
 		<a href ="bizdash.php">
@@ -206,10 +193,7 @@
 		<a href ="analytics.php">
 			<button type="button" class="btn btn-success btn-block">Clients</button>
 		</a>
-      <hr>
-	  <a href ="ads.php">
-        <button type="button" class="btn btn-success btn-block">Promote</button>
-	  </a>
+   
       <hr>
 	   <a href ="bizsettings.php">
         <button type="button" class="btn btn-success btn-block">Settings</button>

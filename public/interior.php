@@ -174,10 +174,7 @@ $conn->close();
         <button type="button" class="btn btn-success btn-block">Interior</button>
 	  </a>
       <hr>
-	   <a href ="billing.php">
-        <button type="button" class="btn btn-success btn-block">Billing</button>
-		</a>
-      <hr>
+	 
 	   <a href ="settings.php">
         <button type="button" class="btn btn-success btn-block">Settings</button>
 		</a>
